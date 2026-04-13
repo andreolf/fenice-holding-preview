@@ -40,6 +40,10 @@ html {
   }
 }
 
+html {
+  background: var(--bg);
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -49,6 +53,23 @@ body {
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Marchio: watermark molto leggero sopra i contenuti (pointer-events disattivati) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: url("assets/logo-fenice@1x.png") 50% min(40vh, 21rem) / min(72vmin, 520px) no-repeat;
+  opacity: 0.028;
+}
+
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -101,8 +122,9 @@ a:hover {
 
 .brand-logo {
   display: block;
-  height: clamp(2.65rem, 5.5vw, 3.15rem);
+  height: clamp(3rem, 6.2vw, 3.65rem);
   width: auto;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.06));
 }
 
 .nav {
@@ -154,12 +176,10 @@ main {
 .hero-immersive__veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    105deg,
-    rgba(8, 10, 14, 0.55) 0%,
-    rgba(8, 10, 14, 0.18) 42%,
-    rgba(8, 10, 14, 0.25) 100%
-  );
+  background: linear-gradient(105deg,
+      rgba(8, 10, 14, 0.55) 0%,
+      rgba(8, 10, 14, 0.18) 42%,
+      rgba(8, 10, 14, 0.25) 100%);
   pointer-events: none;
 }
 
@@ -189,10 +209,15 @@ main {
 }
 
 .hero-immersive__glass-line--second {
-  margin-top: 0.35rem;
-  font-size: clamp(0.5rem, 1.1vw, 0.68rem);
-  letter-spacing: 0.5em;
-  opacity: 0.92;
+  margin-top: 0.45rem;
+  font-size: clamp(0.62rem, 1.4vw, 0.82rem);
+  font-weight: 500;
+  letter-spacing: 0.38em;
+  opacity: 0.95;
+}
+
+.hero-immersive__glass-line--second abbr {
+  text-decoration: none;
 }
 
 .hero-immersive__scroll-hint {
@@ -212,11 +237,13 @@ main {
 }
 
 @keyframes float-hint {
+
   0%,
   100% {
     opacity: 0.45;
     transform: translateX(-50%) translateY(0);
   }
+
   50% {
     opacity: 0.95;
     transform: translateX(-50%) translateY(6px);
@@ -259,6 +286,7 @@ main {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -278,22 +306,15 @@ main {
 .statement__title {
   font-family: var(--font-serif);
   font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 500;
-  line-height: 1.06;
+  font-weight: 700;
+  line-height: 1.08;
   margin: 0 0 1.35rem;
   letter-spacing: -0.02em;
 }
 
-.statement__title-line {
-  display: block;
-}
-
-.statement__title-line--sa {
-  margin-top: 0.15rem;
-  font-size: 0.42em;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: #333;
+.statement__title .statement__sa {
+  font-weight: 700;
+  letter-spacing: 0.06em;
 }
 
 .statement__title abbr {
@@ -305,6 +326,9 @@ main {
   max-width: 38em;
   color: #2c2c2c;
   font-weight: 300;
+  text-align: justify;
+  hyphens: auto;
+  text-wrap: pretty;
 }
 
 .statement__meta {
@@ -315,7 +339,15 @@ main {
   color: var(--muted);
   margin: 0;
   max-width: 36em;
-  line-height: 1.55;
+  line-height: 1.65;
+}
+
+.statement__meta-line {
+  display: block;
+}
+
+.statement__meta-line + .statement__meta-line {
+  margin-top: 0.4em;
 }
 
 .eyebrow {
@@ -367,7 +399,6 @@ main {
 .intro-inner {
   max-width: 720px;
   margin: 0 auto;
-  text-align: center;
 }
 
 .intro-text {
@@ -378,6 +409,9 @@ main {
   line-height: 1.55;
   margin: 0;
   color: #242424;
+  text-align: justify;
+  hyphens: auto;
+  text-wrap: pretty;
 }
 
 .division {
@@ -387,7 +421,8 @@ main {
 }
 
 .division--alt {
-  background: linear-gradient(180deg, var(--accent-soft) 0%, transparent 55%);
+  /* Tonalità più vicina al bianco: meno salto rispetto alla sezione 01 */
+  background: linear-gradient(180deg, rgba(200, 16, 46, 0.028) 0%, rgba(250, 249, 248, 0.9) 38%, var(--bg) 72%);
 }
 
 .division-grid {
@@ -434,6 +469,9 @@ main {
   margin: 0;
   max-width: 52em;
   color: #2c2c2c;
+  text-align: justify;
+  hyphens: auto;
+  text-wrap: pretty;
 }
 
 .site-footer {
