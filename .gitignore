@@ -1,0 +1,5 @@
+.venv/
+_voice.*
+*.wav
+*.vtt
+.DS_Store
