@@ -167,7 +167,8 @@ main {
   width: 104%;
   height: 110%;
   object-fit: cover;
-  object-position: 45% center;
+  /* Sposta il crop a destra: la scritta “Blue Lake” sulla vetrata resta fuori campo */
+  object-position: 62% center;
   transform: translateY(calc(var(--parallax, 0px) * -1)) scale(1.06);
   will-change: transform;
   transition: transform 0.1s linear;
@@ -176,10 +177,15 @@ main {
 .hero-immersive__veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg,
-      rgba(8, 10, 14, 0.55) 0%,
-      rgba(8, 10, 14, 0.18) 42%,
-      rgba(8, 10, 14, 0.25) 100%);
+  /* Fascia sinistra più scura: copre eventuali residui della scritta sulla foto */
+  background: linear-gradient(
+    105deg,
+    rgba(8, 10, 14, 0.88) 0%,
+    rgba(8, 10, 14, 0.72) 12%,
+    rgba(8, 10, 14, 0.38) 28%,
+    rgba(8, 10, 14, 0.16) 48%,
+    rgba(8, 10, 14, 0.24) 100%
+  );
   pointer-events: none;
 }
 
@@ -493,6 +499,10 @@ main {
 }
 
 @media (max-width: 900px) {
+  .hero-immersive__img {
+    object-position: 58% center;
+  }
+
   .hero-immersive__glass {
     transform: translateY(-36%);
   }
