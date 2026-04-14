@@ -1,9 +1,9 @@
 :root {
-  --bg: #ffffff;
-  --bg-soft: #f7f7f8;
-  --ink: #0c0c0c;
-  --muted: #5a5a5a;
-  --line: rgba(12, 12, 12, 0.1);
+  --bg: #fafaf9;
+  --bg-soft: #f3f2f0;
+  --ink: #121110;
+  --muted: #5c5a57;
+  --line: rgba(18, 17, 16, 0.08);
   /* Rosso marchio (allineato al logo vettoriale / presentazione) */
   --accent: #c8102e;
   --accent-deep: #7a0c1d;
@@ -11,6 +11,7 @@
   --font-serif: "Cormorant Garamond", "Libre Baskerville", Georgia, serif;
   --font-sans: "Outfit", system-ui, sans-serif;
   --header-h: 4.25rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 *,
@@ -21,6 +22,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -40,36 +42,21 @@ html {
   }
 }
 
-html {
-  background: var(--bg);
-}
-
 body {
   margin: 0;
   font-family: var(--font-sans);
   font-weight: 300;
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.68;
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Marchio: watermark molto leggero sopra i contenuti (pointer-events disattivati) */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: url("assets/logo-fenice@1x.png") 50% min(40vh, 21rem) / min(72vmin, 520px) no-repeat;
-  opacity: 0.028;
-}
-
-main,
-.site-footer {
-  position: relative;
-  z-index: 1;
+::selection {
+  background: rgba(200, 16, 46, 0.12);
+  color: var(--ink);
 }
 
 a {
@@ -94,7 +81,7 @@ a:hover {
   justify-content: space-between;
   min-height: var(--header-h);
   padding: 0.65rem clamp(1rem, 4vw, 2.75rem);
-  background: rgba(255, 255, 255, 0.62);
+  background: rgba(250, 249, 248, 0.72);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid transparent;
@@ -105,7 +92,7 @@ a:hover {
 }
 
 .site-header--scrolled {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(250, 249, 248, 0.97);
   border-bottom-color: var(--line);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
@@ -148,6 +135,7 @@ a:hover {
 
 main {
   padding-top: 0;
+  position: relative;
 }
 
 /* ——— Hero immersivo (foto sede + vetro “Fenice Holding”) ——— */
@@ -158,7 +146,7 @@ main {
   align-items: stretch;
   justify-content: center;
   overflow: hidden;
-  background: #0e1114;
+  background: #0c0e11;
 }
 
 .hero-immersive__img {
@@ -194,17 +182,21 @@ main {
   left: clamp(1rem, 4vw, 3rem);
   top: 50%;
   transform: translateY(-42%);
-  padding: 1.15rem 1.35rem 1.05rem;
-  background: rgba(255, 255, 255, 0.34);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  max-width: min(22rem, 88vw);
+  padding: 1.2rem 1.45rem 1.1rem;
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 2px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 18px 48px rgba(0, 0, 0, 0.14);
   font-family: var(--font-sans);
   font-weight: 300;
   letter-spacing: 0.42em;
   text-transform: uppercase;
-  color: rgba(42, 44, 52, 0.92);
+  color: rgba(36, 38, 46, 0.94);
   line-height: 1.35;
   z-index: 2;
 }
@@ -300,11 +292,26 @@ main {
 
 /* ——— Statement (blocco hero testuale) ——— */
 .statement {
+  position: relative;
+  overflow: hidden;
   padding: clamp(3.5rem, 10vw, 6.5rem) clamp(1.25rem, 5vw, 4rem) clamp(2rem, 6vw, 3.5rem);
   background: var(--bg);
 }
 
+/* Filigrana marchio: visibile ma dietro al testo (no velo su tutta la pagina) */
+.statement::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("assets/logo-fenice@1x.png") 100% 6% / min(46vw, 340px) no-repeat;
+  opacity: 0.042;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .statement__inner {
+  position: relative;
+  z-index: 1;
   max-width: 820px;
   margin: 0 auto;
 }
@@ -315,7 +322,8 @@ main {
   font-weight: 700;
   line-height: 1.08;
   margin: 0 0 1.35rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 .statement__title .statement__sa {
@@ -330,11 +338,12 @@ main {
 .statement__lead {
   margin: 0 0 1.5rem;
   max-width: 38em;
-  color: #2c2c2c;
+  color: #2a2928;
   font-weight: 300;
   text-align: justify;
-  hyphens: auto;
   text-wrap: pretty;
+  hyphens: auto;
+  hyphenate-limit-chars: 8 4 4;
 }
 
 .statement__meta {
@@ -387,8 +396,8 @@ main {
   opacity: 0;
   transform: translateY(22px);
   transition:
-    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.65s var(--ease-out),
+    transform 0.65s var(--ease-out);
 }
 
 .reveal.is-visible {
@@ -412,12 +421,13 @@ main {
   font-size: clamp(1.2rem, 2.2vw, 1.45rem);
   font-style: italic;
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.58;
   margin: 0;
-  color: #242424;
+  color: #2a2928;
   text-align: justify;
-  hyphens: auto;
   text-wrap: pretty;
+  hyphens: auto;
+  hyphenate-limit-chars: 8 4 4;
 }
 
 .division {
@@ -428,7 +438,7 @@ main {
 
 .division--alt {
   /* Tonalità più vicina al bianco: meno salto rispetto alla sezione 01 */
-  background: linear-gradient(180deg, rgba(200, 16, 46, 0.028) 0%, rgba(250, 249, 248, 0.9) 38%, var(--bg) 72%);
+  background: linear-gradient(180deg, rgba(200, 16, 46, 0.022) 0%, rgba(247, 246, 244, 0.95) 42%, var(--bg) 78%);
 }
 
 .division-grid {
@@ -473,15 +483,16 @@ main {
 
 .division-body p {
   margin: 0;
-  max-width: 52em;
-  color: #2c2c2c;
+  max-width: 50em;
+  color: #2a2928;
   text-align: justify;
-  hyphens: auto;
   text-wrap: pretty;
+  hyphens: auto;
+  hyphenate-limit-chars: 8 4 4;
 }
 
 .site-footer {
-  padding: 2.5rem clamp(1.25rem, 5vw, 4rem) 3.5rem;
+  padding: 3rem clamp(1.25rem, 5vw, 4rem) 3.75rem;
   background: var(--bg);
 }
 
