@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fenice Holding SA — Phoenix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f6f1ea;
+    --cream-warm: #efe7db;
+    --ink: #1c1413;
+    --ink-soft: #5a4f4a;
+    --red: #c8362c;
+    --red-deep: #8c1f17;
+    --ember: #e87b3a;
+    --rule: #d9cdbb;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    font-weight: 400;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 200; pointer-events: none;
+    opacity: 0.4; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 0.13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ============ NAV ============ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 2.5rem;
+    background: rgba(246, 241, 234, 0.85);
+    backdrop-filter: blur(14px);
+  }
+  .brand {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.6rem; letter-spacing: -0.01em;
+  }
+  .brand em { font-style: italic; color: var(--red); }
+  .phoenix-icon {
+    width: 30px; height: 30px;
+    transition: transform .8s cubic-bezier(.4, 0, .2, 1);
+  }
+  .brand:hover .phoenix-icon { transform: rotate(-12deg) scale(1.1); }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink); font-size: 0.92rem;
+    font-weight: 500; transition: color .3s; position: relative;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    background: var(--ink); color: var(--cream);
+    padding: 0.7rem 1.4rem; border-radius: 999px;
+    text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    transition: all .3s ease;
+  }
+  .nav-cta:hover { background: var(--red); transform: translateY(-1px); }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    padding: 8rem 2.5rem 4rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-bg-shape {
+    position: absolute;
+    right: -10rem; top: 0;
+    width: 50rem; height: 50rem;
+    background:
+      radial-gradient(circle at 30% 30%,
+        rgba(232, 123, 58, 0.4) 0%,
+        rgba(200, 54, 44, 0.2) 30%,
+        rgba(140, 31, 23, 0.1) 50%,
+        transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    animation: float 14s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-3rem, 2rem) scale(1.05); }
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    font-family: 'Space Mono', monospace; font-size: 0.78rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--red);
+    background: rgba(200, 54, 44, 0.08);
+    padding: 0.5rem 1rem; border-radius: 999px;
+    border: 1px solid rgba(200, 54, 44, 0.15);
+    margin-bottom: 2rem;
+  }
+  .eyebrow::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--red); animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1.display {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3.2rem, 8vw, 7rem);
+    line-height: 0.95; letter-spacing: -0.02em; font-weight: 400;
+    margin-bottom: 2rem;
+  }
+  h1.display em {
+    font-style: italic; color: var(--red);
+    background: linear-gradient(120deg, var(--red) 0%, var(--ember) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  h1.display .underline {
+    position: relative; display: inline-block;
+  }
+  h1.display .underline::after {
+    content: ''; position: absolute; bottom: 0.05em; left: 0; right: 0;
+    height: 0.08em; background: var(--ember);
+    transform: scaleX(0); transform-origin: left;
+    animation: draw 1.4s 0.8s cubic-bezier(.5,0,.2,1) forwards;
+  }
+  @keyframes draw { to { transform: scaleX(1); } }
+
+  .hero-lede {
+    font-size: 1.18rem; line-height: 1.55; max-width: 32rem;
+    color: var(--ink-soft); margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--ink); color: var(--cream);
+    padding: 1rem 1.8rem; border-radius: 999px;
+    text-decoration: none; font-size: 0.95rem; font-weight: 500;
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+    overflow: hidden; position: relative;
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(120deg, var(--red), var(--ember));
+    transform: translateX(-101%); transition: transform .5s cubic-bezier(.4,0,.2,1);
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-primary svg { position: relative; z-index: 1; transition: transform .3s; }
+  .btn-primary:hover svg { transform: translateX(4px); }
+  .btn-link {
+    color: var(--ink); text-decoration: none; font-weight: 500;
+    border-bottom: 1px solid var(--ink); padding-bottom: 0.2rem;
+    transition: all .3s;
+  }
+  .btn-link:hover { color: var(--red); border-color: var(--red); }
+
+  /* Hero Visual */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: 200px 200px 24px 24px;
+    overflow: hidden;
+    background:
+      linear-gradient(160deg,
+        var(--ember) 0%,
+        var(--red) 35%,
+        var(--red-deep) 75%,
+        var(--ink) 100%);
+    box-shadow:
+      0 40px 80px -20px rgba(140, 31, 23, 0.4),
+      0 20px 40px -10px rgba(28, 20, 19, 0.2);
+    animation: rise 1.4s cubic-bezier(.2, 1, .3, 1) backwards;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(40px); }
+  }
+  .hero-visual::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(255,255,255,0.18) 0%, transparent 40%),
+      radial-gradient(circle at 80% 20%, rgba(255,180,100,0.25) 0%, transparent 40%);
+  }
+  .hero-visual::after {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 3px);
+    mix-blend-mode: overlay;
+  }
+  .hero-visual-overlay {
+    position: absolute; inset: 0; padding: 2rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    color: rgba(255,255,255,0.92);
+  }
+  .hero-visual-tag {
+    align-self: flex-end;
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    background: rgba(0,0,0,0.25); padding: 0.5rem 0.9rem; border-radius: 999px;
+    backdrop-filter: blur(8px);
+  }
+  .hero-visual-foot {
+    display: flex; justify-content: space-between; align-items: end;
+  }
+  .hero-visual-foot .label {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75;
+  }
+  .hero-visual-foot .value {
+    font-family: 'Instrument Serif', serif; font-size: 3rem;
+    font-style: italic; line-height: 1; margin-top: 0.3rem;
+  }
+
+  /* ============ MARQUEE ============ */
+  .marquee {
+    background: var(--ink); color: var(--cream);
+    padding: 1.4rem 0; overflow: hidden;
+    margin-top: 2rem;
+  }
+  .marquee-track {
+    display: flex; gap: 3rem; white-space: nowrap;
+    animation: scroll 38s linear infinite;
+    font-family: 'Instrument Serif', serif; font-size: 1.6rem;
+    font-style: italic;
+  }
+  .marquee-track span::before {
+    content: ' ✦ '; color: var(--ember); margin: 0 1rem;
+    font-style: normal;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); } to { transform: translateX(-50%); }
+  }
+
+  /* ============ INTRO ============ */
+  .intro {
+    padding: 7rem 2.5rem;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem;
+    max-width: 1500px; margin: 0 auto;
+  }
+  .section-marker {
+    font-family: 'Space Mono', monospace; font-size: 0.78rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red); display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-marker::before {
+    content: ''; width: 32px; height: 1px; background: var(--red);
+  }
+  .intro h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+    line-height: 1.05; letter-spacing: -0.015em; font-weight: 400;
+    margin-top: 1.5rem;
+  }
+  .intro h2 em { font-style: italic; color: var(--red); }
+  .intro p {
+    font-size: 1.08rem; line-height: 1.65; color: var(--ink-soft);
+    margin-bottom: 1.4rem;
+  }
+  .leadership {
+    margin-top: 3rem; padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
+  .leader-card {
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .leader-avatar {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--ember), var(--red));
+    display: grid; place-items: center;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.4rem; font-style: italic; color: white;
+    flex-shrink: 0;
+  }
+  .leader-name {
+    font-family: 'Instrument Serif', serif; font-size: 1.25rem;
+    font-style: italic; line-height: 1.1;
+  }
+  .leader-role {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);
+    margin-top: 0.3rem;
+  }
+
+  /* ============ COMPANIES ============ */
+  .companies {
+    padding: 5rem 2.5rem 7rem;
+    max-width: 1500px; margin: 0 auto;
+  }
+  .companies-head {
+    margin-bottom: 4rem; max-width: 50rem;
+  }
+  .companies-head h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.4rem, 5vw, 4.4rem);
+    line-height: 1.02; letter-spacing: -0.02em; font-weight: 400;
+    margin-top: 1.5rem;
+  }
+  .companies-head h2 em { font-style: italic; color: var(--red); }
+
+  .companies-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;
+  }
+  .company-card {
+    background: var(--cream-warm);
+    border-radius: 28px;
+    padding: 2.2rem;
+    position: relative; overflow: hidden;
+    transition: all .5s cubic-bezier(.4, 0, .2, 1);
+    border: 1px solid transparent;
+    display: flex; flex-direction: column;
+    min-height: 32rem;
+  }
+  .company-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--red);
+    box-shadow: 0 30px 50px -20px rgba(28, 20, 19, 0.18);
+  }
+  .company-card.featured {
+    background: linear-gradient(160deg, var(--ink) 0%, var(--red-deep) 100%);
+    color: var(--cream);
+  }
+  .company-card.featured .company-num,
+  .company-card.featured .company-desc { color: rgba(246, 241, 234, 0.85); }
+  .company-card.featured .company-tag-list span {
+    border-color: rgba(246, 241, 234, 0.3); color: var(--cream);
+  }
+  .company-card.featured .company-link { color: var(--ember); border-color: var(--ember); }
+
+  .company-num {
+    font-family: 'Space Mono', monospace; font-size: 0.78rem;
+    letter-spacing: 0.16em; color: var(--red);
+    margin-bottom: 1.5rem;
+  }
+  .company-card.featured .company-num { color: var(--ember); }
+  .company-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem; line-height: 1.05;
+    letter-spacing: -0.01em; margin-bottom: 0.4rem;
+  }
+  .company-name em { font-style: italic; color: var(--red); }
+  .company-card.featured .company-name em { color: var(--ember); }
+  .company-sub {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 1.5rem;
+  }
+  .company-card.featured .company-sub { color: rgba(246,241,234,0.6); }
+
+  .company-desc {
+    font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft);
+    margin-bottom: 1.6rem; flex-grow: 1;
+  }
+  .company-tag-list {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .company-tag-list span {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    padding: 0.3rem 0.7rem; border: 1px solid var(--rule);
+    border-radius: 999px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--ink);
+  }
+  .company-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.9rem; font-weight: 500;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--ink); padding-bottom: 0.3rem;
+    align-self: flex-start;
+    transition: all .3s;
+  }
+  .company-link:hover { color: var(--red); border-color: var(--red); gap: 0.8rem; }
+  .company-card .glow {
+    position: absolute; bottom: -50%; right: -30%;
+    width: 200%; aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(232, 123, 58, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+    opacity: 0; transition: opacity .5s;
+  }
+  .company-card:hover .glow { opacity: 1; }
+  .company-card.featured .glow {
+    background: radial-gradient(circle, rgba(232, 123, 58, 0.3) 0%, transparent 60%);
+    opacity: 1;
+  }
+
+  /* ============ MANIFESTO ============ */
+  .manifesto {
+    padding: 7rem 2.5rem;
+    background: var(--ink); color: var(--cream);
+    position: relative; overflow: hidden;
+  }
+  .manifesto::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80rem; height: 80rem;
+    background: radial-gradient(circle,
+      rgba(200, 54, 44, 0.15) 0%,
+      transparent 50%);
+    pointer-events: none;
+  }
+  .manifesto-inner {
+    max-width: 1300px; margin: 0 auto; position: relative;
+    display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem;
+  }
+  .manifesto h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.05; letter-spacing: -0.02em; font-weight: 400;
+    margin-top: 1.5rem;
+  }
+  .manifesto h2 em { font-style: italic; color: var(--ember); }
+  .manifesto .section-marker { color: var(--ember); }
+  .manifesto .section-marker::before { background: var(--ember); }
+  .values-list {
+    display: grid; gap: 1.5rem;
+  }
+  .value-row {
+    display: grid; grid-template-columns: auto 1fr; gap: 2rem;
+    padding: 1.6rem 0;
+    border-top: 1px solid rgba(246, 241, 234, 0.15);
+    align-items: start;
+    transition: padding .3s;
+  }
+  .value-row:hover { padding-left: 1rem; }
+  .value-row:hover .value-num { color: var(--ember); }
+  .value-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.4rem; font-style: italic;
+    color: var(--red); line-height: 1;
+    transition: color .3s;
+    min-width: 4rem;
+  }
+  .value-row h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.6rem; line-height: 1.2; font-weight: 400;
+    margin-bottom: 0.4rem;
+  }
+  .value-row p {
+    font-size: 0.96rem; line-height: 1.55;
+    color: rgba(246, 241, 234, 0.7);
+  }
+
+  /* ============ CTA ============ */
+  .cta {
+    padding: 7rem 2.5rem; text-align: center;
+    background:
+      radial-gradient(ellipse at center top, rgba(232, 123, 58, 0.15) 0%, transparent 60%),
+      var(--cream);
+  }
+  .cta h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 1.02; letter-spacing: -0.02em; font-weight: 400;
+    max-width: 22ch; margin: 0 auto 2rem;
+  }
+  .cta h2 em { font-style: italic; color: var(--red); }
+  .cta p {
+    font-size: 1.15rem; max-width: 36rem; margin: 0 auto 2.5rem;
+    color: var(--ink-soft);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 4rem 2.5rem 2rem;
+    background: var(--cream-warm);
+    border-top: 1px solid var(--rule);
+  }
+  .footer-grid {
+    max-width: 1500px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+    padding-bottom: 3rem;
+  }
+  .footer-brand .name {
+    font-family: 'Instrument Serif', serif; font-size: 2rem;
+    line-height: 1.05;
+  }
+  .footer-brand .name em { font-style: italic; color: var(--red); }
+  .footer-brand p {
+    margin-top: 1rem; color: var(--ink-soft); font-size: 0.95rem;
+    max-width: 22rem;
+  }
+  .footer-col h4 {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 1.2rem;
+  }
+  .footer-col a {
+    display: block; color: var(--ink); text-decoration: none;
+    font-size: 0.95rem; padding: 0.3rem 0;
+    transition: all .3s;
+  }
+  .footer-col a:hover { color: var(--red); padding-left: 0.4rem; }
+  .footer-base {
+    max-width: 1500px; margin: 0 auto;
+    padding-top: 2rem; border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft);
+  }
+
+  @media (max-width: 1000px) {
+    .nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2.5rem; }
+    .hero-visual { aspect-ratio: 4/3; border-radius: 100px 100px 16px 16px; }
+    .intro, .companies, .manifesto, .cta { padding: 4rem 1.5rem; }
+    .intro, .manifesto-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .companies-grid { grid-template-columns: 1fr; }
+    .company-card { min-height: auto; }
+    .leadership { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-base { flex-direction: column; gap: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <svg class="phoenix-icon" viewBox="0 0 40 40" fill="none">
+      <path d="M20 4 L28 14 L24 16 L32 22 L26 24 L34 32 L20 28 L6 32 L14 24 L8 22 L16 16 L12 14 Z"
+            fill="#c8362c" stroke="#8c1f17" stroke-width="0.5" stroke-linejoin="round"/>
+    </svg>
+    Fenice <em>Holding</em>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#gruppo">Gruppo</a></li>
+    <li><a href="#fenice-re">Fenice RE</a></li>
+    <li><a href="#blue-lake">Blue Lake</a></li>
+    <li><a href="#madi">MADI</a></li>
+    <li><a href="#contatti" class="nav-cta">Parliamo →</a></li>
+  </ul>
+</header>
+
+<section class="hero">
+  <div class="hero-bg-shape"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Real Estate · Svizzera · 2026</div>
+    <h1 class="display">
+      Rinasce<br>
+      il <em>valore</em><br>
+      <span class="underline">immobiliare.</span>
+    </h1>
+    <p class="hero-lede">
+      Riqualificazione strutturale ed energetica, ingegneria finanziaria e accesso strutturato
+      alle opportunità. Tre società del gruppo. Una sola visione: trasformare il real estate svizzero.
+    </p>
+    <div class="hero-actions">
+      <a href="#gruppo" class="btn-primary">
+        <span>Scopri il Gruppo</span>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+          <path d="M1 6h13m0 0L9 1m5 5L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#contatti" class="btn-link">Contattaci</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-visual-overlay">
+      <span class="hero-visual-tag">⌘ Fenice · 001</span>
+      <div class="hero-visual-foot">
+        <div>
+          <div class="label">Sede istituzionale</div>
+          <div class="value">Lugano<br>Zürich</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="label">Anno</div>
+          <div class="value">'26</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Riqualificazione</span><span>Innovazione</span><span>Valore</span>
+    <span>Sostenibilità</span><span>Real Estate</span><span>Svizzera</span>
+    <span>Riqualificazione</span><span>Innovazione</span><span>Valore</span>
+    <span>Sostenibilità</span><span>Real Estate</span><span>Svizzera</span>
+  </div>
+</div>
+
+<section class="intro" id="gruppo">
+  <div>
+    <div class="section-marker">Il Gruppo</div>
+    <h2>Tre società.<br><em>Una visione.</em></h2>
+  </div>
+  <div>
+    <p>
+      Fenice Holding coordina e valorizza tre società del gruppo, ciascuna specializzata in ambiti
+      distinti per offrire soluzioni integrate e sinergiche nel mercato immobiliare svizzero.
+    </p>
+    <p>
+      Uniamo competenze finanziarie, tecniche e di asset management per generare rendimenti resilienti
+      a medio-lungo termine. Con un approccio rigoroso, sostenibile e profondamente radicato nel territorio.
+    </p>
+    <div class="leadership">
+      <div class="leader-card">
+        <div class="leader-avatar">F</div>
+        <div>
+          <div class="leader-name">Federico Cappelletti</div>
+          <div class="leader-role">Presidente</div>
+        </div>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">S</div>
+        <div>
+          <div class="leader-name">Sebastiano Andreoli</div>
+          <div class="leader-role">Amministratore Delegato</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="companies">
+  <div class="companies-head">
+    <div class="section-marker">Le società</div>
+    <h2>Specializzate, ma <em>integrate.</em></h2>
+  </div>
+
+  <div class="companies-grid">
+    <article class="company-card" id="fenice-re">
+      <div class="glow"></div>
+      <div class="company-num">— 01 / Asset Management</div>
+      <h3 class="company-name"><em>Fenice</em> Real Estate</h3>
+      <div class="company-sub">Patrimoni & Performance</div>
+      <p class="company-desc">
+        Gestione di patrimoni immobiliari per investitori istituzionali e privati: dalla valutazione
+        e acquisizione alla valorizzazione, gestione operativa e dismissione strategica.
+      </p>
+      <div class="company-tag-list">
+        <span>Valutazione</span><span>Asset Mgmt</span><span>Riqualificazione</span><span>Reporting</span>
+      </div>
+      <a href="#" class="company-link">Approfondisci →</a>
+    </article>
+
+    <article class="company-card featured" id="blue-lake">
+      <div class="glow"></div>
+      <div class="company-num">— 02 / Investment</div>
+      <h3 class="company-name"><em>Blue Lake</em><br>Capital</h3>
+      <div class="company-sub">Capitale & Partecipazioni</div>
+      <p class="company-desc">
+        Acquisizione e gestione di partecipazioni in aziende e progetti immobiliari ad alto potenziale.
+        Approccio attivo e sostenibile, basato su analisi rigorosa e partnership locali.
+      </p>
+      <div class="company-tag-list">
+        <span>Private Equity</span><span>Sviluppo</span><span>Partnership</span><span>Long-Term</span>
+      </div>
+      <a href="#" class="company-link">Approfondisci →</a>
+    </article>
+
+    <article class="company-card" id="madi">
+      <div class="glow"></div>
+      <div class="company-num">— 03 / Modular Housing</div>
+      <h3 class="company-name"><em>MADI</em></h3>
+      <div class="company-sub">Modulare & Brevettato</div>
+      <p class="company-desc">
+        Moduli prefabbricati e case dispiegabili brevettate. Materiali ad alte prestazioni, sistemi
+        sostenibili e tecnologie smart per soluzioni rapide, efficienti e adattabili.
+      </p>
+      <div class="company-tag-list">
+        <span>Brevetto</span><span>Smart</span><span>Chiavi in mano</span><span>Sostenibile</span>
+      </div>
+      <a href="#" class="company-link">Approfondisci →</a>
+    </article>
+  </div>
+</section>
+
+<section class="manifesto">
+  <div class="manifesto-inner">
+    <div>
+      <div class="section-marker">Il nostro DNA</div>
+      <h2>Quattro principi.<br>Un solo <em>orizzonte.</em></h2>
+    </div>
+    <div class="values-list">
+      <div class="value-row">
+        <div class="value-num">i.</div>
+        <div>
+          <h3>Rigore finanziario</h3>
+          <p>Analisi quantitativa, due diligence tecnica e governance trasparente come fondamenta di ogni operazione.</p>
+        </div>
+      </div>
+      <div class="value-row">
+        <div class="value-num">ii.</div>
+        <div>
+          <h3>Innovazione costruttiva</h3>
+          <p>Tecnologie costruttive avanzate, materiali ad alte prestazioni e ingegneria finanziaria al servizio del valore.</p>
+        </div>
+      </div>
+      <div class="value-row">
+        <div class="value-num">iii.</div>
+        <div>
+          <h3>Sostenibilità reale</h3>
+          <p>Riqualificazione energetica e modelli operativi che riducono impatto ambientale e costi operativi nel tempo.</p>
+        </div>
+      </div>
+      <div class="value-row">
+        <div class="value-num">iv.</div>
+        <div>
+          <h3>Visione integrata</h3>
+          <p>Orizzonte medio-lungo, partnership locali e una strategia di gruppo che valorizza le sinergie tra le società.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contatti">
+  <div class="section-marker" style="justify-content:center;">Iniziamo</div>
+  <h2 style="margin-top:1.5rem;">Costruiamo insieme<br>il prossimo <em>capitolo.</em></h2>
+  <p>Per opportunità d'investimento, partnership strategiche o per saperne di più sul gruppo Fenice.</p>
+  <a href="mailto:info@fenice-holding.ch" class="btn-primary">
+    <span>info@fenice-holding.ch</span>
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+      <path d="M1 6h13m0 0L9 1m5 5L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="name">Fenice <em>Holding</em> SA</div>
+      <p>Real estate svizzero. Riqualificazione, ingegneria finanziaria, innovazione modulare.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Gruppo</h4>
+      <a href="#fenice-re">Fenice Real Estate</a>
+      <a href="#blue-lake">Blue Lake Capital</a>
+      <a href="#madi">MADI</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contatti</h4>
+      <a href="mailto:info@fenice-holding.ch">info@fenice-holding.ch</a>
+      <a href="tel:+41000000000">+41 (0)00 000 00 00</a>
+      <a href="#">Lugano · Zürich</a>
+    </div>
+    <div class="footer-col">
+      <h4>Network</h4>
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span>© 2026 Fenice Holding SA</span>
+    <span>Privacy · Cookie · Impressum</span>
+  </div>
+</footer>
+
+</body>
+</html>
