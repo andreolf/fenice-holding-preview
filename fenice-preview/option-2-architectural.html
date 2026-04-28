@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fenice Holding SA — Architectural</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #0a0a0a;
+    --ink-mute: #6b6b6b;
+    --red: #e63027;
+    --red-deep: #b51e17;
+    --line: #0a0a0a;
+    --line-soft: #e5e5e5;
+    --grid: 12;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Archivo', sans-serif;
+    background: var(--bg); color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ================ NAV ================ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 2rem;
+    padding: 1rem 2rem;
+    background: var(--bg);
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .logo {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-family: 'Archivo', sans-serif; font-weight: 800;
+    letter-spacing: -0.02em; font-size: 1.05rem; text-transform: uppercase;
+  }
+  .logo-glyph {
+    width: 28px; height: 28px; background: var(--red); position: relative;
+    display: grid; place-items: center;
+  }
+  .logo-glyph::after {
+    content: 'F'; color: white; font-weight: 900; font-size: 1rem;
+    font-family: 'Archivo', sans-serif;
+  }
+  .nav-meta {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    color: var(--ink-mute); letter-spacing: 0.1em;
+    justify-self: center;
+  }
+  .nav-meta b { color: var(--red); font-weight: 500; }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links li {
+    border-left: 1px solid var(--line-soft);
+  }
+  .nav-links a {
+    display: block; padding: 0.6rem 1.2rem;
+    text-decoration: none; color: var(--ink);
+    font-size: 0.78rem; letter-spacing: 0.06em; font-weight: 600;
+    text-transform: uppercase; transition: all .2s;
+  }
+  .nav-links a:hover { background: var(--ink); color: var(--bg); }
+  .nav-cta a {
+    background: var(--red); color: white;
+    padding: 0.7rem 1.3rem; text-decoration: none;
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; transition: background .2s;
+  }
+  .nav-cta a:hover { background: var(--ink); }
+
+  /* ================ HERO ================ */
+  .hero {
+    margin-top: 0;
+    padding: 6rem 2rem 0;
+    border-bottom: 1.5px solid var(--ink);
+    position: relative;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 0;
+    border-top: 1.5px solid var(--ink);
+  }
+  .hero-tag {
+    grid-column: 1 / 4;
+    padding: 1rem 1.5rem;
+    border-right: 1.5px solid var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .hero-tag .dot {
+    display: inline-block; width: 8px; height: 8px; background: var(--red);
+    border-radius: 50%; animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  .hero-coords {
+    grid-column: 4 / 13;
+    padding: 1rem 1.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-mute);
+    display: flex; gap: 2.5rem;
+  }
+  .hero-coords b { color: var(--ink); font-weight: 500; }
+
+  .hero-title-wrap {
+    grid-column: 1 / 13;
+    border-top: 1.5px solid var(--ink);
+    padding: 3rem 1.5rem 1.5rem;
+    position: relative;
+  }
+  .hero-title {
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(3.5rem, 13vw, 13rem);
+    font-weight: 900; letter-spacing: -0.04em; line-height: 0.86;
+    text-transform: uppercase;
+  }
+  .hero-title .row { display: block; position: relative; }
+  .hero-title .row.indent { padding-left: 12vw; }
+  .hero-title .red { color: var(--red); }
+  .hero-title .out {
+    -webkit-text-stroke: 2px var(--ink);
+    color: transparent; font-style: italic;
+    font-family: 'Fraunces', serif; font-weight: 400;
+  }
+  .hero-title .slash { color: var(--red); }
+
+  .hero-bottom {
+    grid-column: 1/13;
+    border-top: 1.5px solid var(--ink);
+    display: grid; grid-template-columns: 5fr 4fr 3fr; gap: 0;
+  }
+  .hero-bottom > div {
+    padding: 2rem 1.5rem;
+    border-right: 1.5px solid var(--ink);
+  }
+  .hero-bottom > div:last-child { border-right: none; }
+  .hero-lede {
+    font-size: 1.05rem; line-height: 1.5; color: var(--ink);
+    max-width: 32rem;
+  }
+  .hero-lede em {
+    font-family: 'Fraunces', serif; font-style: italic;
+    color: var(--red); font-weight: 400;
+  }
+  .stat-block .stat-num {
+    font-family: 'Archivo', sans-serif; font-size: 4rem;
+    font-weight: 900; line-height: 1; letter-spacing: -0.04em;
+  }
+  .stat-block .stat-num span { color: var(--red); }
+  .stat-block .stat-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-mute);
+    margin-top: 0.5rem;
+  }
+  .hero-action a {
+    display: block; background: var(--ink); color: var(--bg);
+    padding: 1.2rem; text-align: center; text-decoration: none;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.85rem; transition: background .2s; height: 100%;
+    display: flex; flex-direction: column; justify-content: center; gap: 0.4rem;
+  }
+  .hero-action a:hover { background: var(--red); }
+  .hero-action small {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.16em; opacity: 0.6; font-weight: 400;
+  }
+
+  /* ================ TICKER ================ */
+  .ticker {
+    background: var(--red); color: white;
+    padding: 0.8rem 0; overflow: hidden;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .ticker-track {
+    display: flex; gap: 3rem; white-space: nowrap;
+    animation: scroll 30s linear infinite;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem;
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+  }
+  .ticker-track span::before { content: ' / '; opacity: 0.6; margin: 0 0.7rem; }
+  @keyframes scroll {
+    from { transform: translateX(0); } to { transform: translateX(-50%); }
+  }
+
+  /* ================ INTRO ================ */
+  .intro {
+    border-bottom: 1.5px solid var(--ink);
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .intro > div:first-child {
+    padding: 5rem 3rem;
+    border-right: 1.5px solid var(--ink);
+    background:
+      linear-gradient(to bottom, transparent calc(100% - 1px), var(--line-soft) 100%),
+      repeating-linear-gradient(0deg, transparent, transparent 80px, var(--line-soft) 80px, var(--line-soft) 81px);
+  }
+  .section-marker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--red);
+    font-weight: 500; margin-bottom: 2rem;
+  }
+  .section-marker::before {
+    content: ''; width: 2rem; height: 1px; background: var(--red);
+  }
+  .intro h2 {
+    font-family: 'Archivo', sans-serif; font-size: clamp(2rem, 4.5vw, 3.6rem);
+    font-weight: 800; letter-spacing: -0.02em; line-height: 1;
+    text-transform: uppercase;
+  }
+  .intro h2 em {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-weight: 300; color: var(--red); text-transform: none;
+  }
+  .intro > div:last-child {
+    padding: 5rem 3rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .intro p {
+    font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.4rem; color: #2a2a2a;
+  }
+  .leadership {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    margin-top: 2.5rem; border-top: 1.5px solid var(--ink);
+  }
+  .leadership div {
+    padding: 1.4rem 0; padding-right: 1rem;
+  }
+  .leadership div:first-child { border-right: 1.5px solid var(--ink); padding-right: 1rem; padding-left: 0; }
+  .leadership div:last-child { padding-left: 1rem; }
+  .leader-name {
+    font-family: 'Archivo', sans-serif; font-size: 1.2rem;
+    font-weight: 700; letter-spacing: -0.01em;
+  }
+  .leader-role {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);
+    margin-top: 0.2rem;
+  }
+
+  /* ================ COMPANIES ================ */
+  .companies-section { padding: 5rem 0 0; border-bottom: 1.5px solid var(--ink); }
+  .companies-head {
+    padding: 0 2rem 4rem;
+    display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;
+    align-items: end;
+  }
+  .companies-head h2 {
+    font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 900;
+    letter-spacing: -0.03em; line-height: 0.95; text-transform: uppercase;
+  }
+  .companies-head h2 em {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+    color: var(--red); text-transform: none;
+  }
+  .companies-head p {
+    color: var(--ink-mute); font-size: 0.95rem; line-height: 1.6;
+    border-left: 2px solid var(--red); padding-left: 1.2rem;
+  }
+
+  .company-row {
+    display: grid; grid-template-columns: 100px 1fr 2fr 1fr 60px;
+    align-items: center; gap: 0;
+    border-top: 1.5px solid var(--ink);
+    transition: background .3s;
+    cursor: pointer; position: relative;
+    overflow: hidden;
+  }
+  .company-row:last-child { border-bottom: 1.5px solid var(--ink); }
+  .company-row > * {
+    padding: 2.2rem 1.5rem;
+    border-right: 1.5px solid var(--line-soft);
+    height: 100%; display: flex; align-items: center;
+  }
+  .company-row > *:last-child { border-right: none; }
+  .company-row .num {
+    font-family: 'Archivo', sans-serif; font-size: 2rem; font-weight: 900;
+    color: var(--red); justify-content: center;
+  }
+  .company-row .name {
+    font-family: 'Archivo', sans-serif; font-size: 1.6rem; font-weight: 800;
+    letter-spacing: -0.01em; line-height: 1.05; text-transform: uppercase;
+  }
+  .company-row .name small {
+    display: block; font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; font-weight: 400; letter-spacing: 0.16em;
+    color: var(--ink-mute); margin-top: 0.4rem; text-transform: uppercase;
+  }
+  .company-row .desc {
+    font-size: 0.92rem; line-height: 1.55; color: #333;
+  }
+  .company-row .tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    align-content: center;
+  }
+  .company-row .tags span {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    padding: 0.3rem 0.6rem; border: 1px solid var(--ink);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .company-row .arrow {
+    font-size: 1.5rem; justify-content: center; color: var(--ink);
+    transition: transform .3s, color .3s;
+  }
+  .company-row:hover { background: #fff5f4; }
+  .company-row:hover .arrow { transform: translateX(6px); color: var(--red); }
+  .company-row.expand-red { background: var(--red); color: white; }
+  .company-row.expand-red .num,
+  .company-row.expand-red .desc { color: white; }
+  .company-row.expand-red .tags span { border-color: white; color: white; }
+  .company-row.expand-red .arrow { color: white; }
+
+  /* ================ MANIFESTO ================ */
+  .manifesto {
+    background: var(--ink); color: var(--bg);
+    padding: 6rem 2rem;
+    border-bottom: 1.5px solid var(--ink);
+    position: relative; overflow: hidden;
+  }
+  .manifesto::before {
+    content: 'FENICE'; position: absolute;
+    bottom: -3rem; right: -2rem;
+    font-size: 22rem; font-weight: 900; letter-spacing: -0.05em;
+    color: rgba(255,255,255,0.04); line-height: 1;
+    pointer-events: none;
+  }
+  .manifesto-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    position: relative;
+  }
+  .manifesto h2 {
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900;
+    letter-spacing: -0.03em; line-height: 0.95; text-transform: uppercase;
+  }
+  .manifesto h2 em {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+    color: var(--red); text-transform: none;
+  }
+  .manifesto-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+  .manifesto-grid > div {
+    padding: 1.8rem 1.4rem 1.8rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+  .manifesto-grid > div:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,0.2);
+    padding-right: 1.4rem;
+  }
+  .manifesto-grid > div:nth-child(even) { padding-left: 1.4rem; }
+  .manifesto-grid h3 {
+    font-family: 'Archivo', sans-serif; font-size: 1.4rem;
+    font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.6rem;
+    text-transform: uppercase;
+  }
+  .manifesto-grid h3 .num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    color: var(--red); margin-right: 0.6rem; vertical-align: 4px;
+  }
+  .manifesto-grid p {
+    font-size: 0.92rem; line-height: 1.55; color: rgba(255,255,255,0.7);
+  }
+
+  /* ================ FOOTER ================ */
+  footer {
+    padding: 4rem 2rem 1.5rem;
+    background: var(--bg);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+    padding-bottom: 3rem; border-bottom: 1.5px solid var(--ink);
+  }
+  .footer-brand .big {
+    font-family: 'Archivo', sans-serif; font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900; letter-spacing: -0.02em; line-height: 1;
+    text-transform: uppercase;
+  }
+  .footer-brand .big em {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+    color: var(--red); text-transform: none;
+  }
+  .footer-brand p {
+    margin-top: 1rem; color: var(--ink-mute); font-size: 0.95rem;
+    max-width: 24rem;
+  }
+  .footer-col h4 {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--red);
+    margin-bottom: 1rem; font-weight: 500;
+  }
+  .footer-col a {
+    display: block; color: var(--ink); text-decoration: none;
+    font-size: 0.95rem; padding: 0.3rem 0; transition: all .2s;
+  }
+  .footer-col a:hover { color: var(--red); padding-left: 0.4rem; }
+  .footer-base {
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
+  }
+
+  @media (max-width: 1000px) {
+    .nav { grid-template-columns: 1fr auto; }
+    .nav-meta { display: none; }
+    .nav-links { display: none; }
+    .hero-tag, .hero-coords { grid-column: 1/13; padding: 0.8rem 1rem; border-right: none; }
+    .hero-coords { border-top: 1.5px solid var(--ink); flex-wrap: wrap; gap: 0.8rem; }
+    .hero-title-wrap { padding: 2rem 1rem 1rem; }
+    .hero-title .row.indent { padding-left: 0; }
+    .hero-bottom { grid-template-columns: 1fr; }
+    .hero-bottom > div { border-right: none; border-bottom: 1.5px solid var(--ink); }
+    .hero-bottom > div:last-child { border-bottom: none; }
+    .intro { grid-template-columns: 1fr; }
+    .intro > div:first-child { border-right: none; border-bottom: 1.5px solid var(--ink); padding: 3rem 1.5rem; }
+    .intro > div:last-child { padding: 3rem 1.5rem; }
+    .companies-head { grid-template-columns: 1fr; padding: 0 1.5rem 3rem; }
+    .company-row { grid-template-columns: 1fr; }
+    .company-row > * { border-right: none; border-bottom: 1px solid var(--line-soft); padding: 1.2rem 1.5rem; }
+    .manifesto { padding: 4rem 1.5rem; }
+    .manifesto-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .manifesto-grid { grid-template-columns: 1fr; }
+    .manifesto-grid > div:nth-child(odd) { border-right: none; padding-right: 0; }
+    .manifesto-grid > div:nth-child(even) { padding-left: 0; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-base { flex-direction: column; gap: 0.8rem; padding: 1.5rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="logo"><span class="logo-glyph"></span> Fenice Holding</div>
+  <div class="nav-meta">SISTEMA INTEGRATO · 03 SOCIETÀ · <b>SVIZZERA</b></div>
+  <ul class="nav-links">
+    <li><a href="#gruppo">Gruppo</a></li>
+    <li><a href="#fenice-re">Fenice RE</a></li>
+    <li><a href="#blue-lake">Blue Lake</a></li>
+    <li><a href="#madi">MADI</a></li>
+  </ul>
+  <div class="nav-cta"><a href="#contatti">Contatti →</a></div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-tag">
+      <span>FENICE / 001</span>
+      <span class="dot"></span>
+    </div>
+    <div class="hero-coords">
+      <span>LAT <b>46.0101°N</b></span>
+      <span>LONG <b>8.9600°E</b></span>
+      <span>HQ <b>LUGANO · CH</b></span>
+      <span>EST <b>2024</b></span>
+    </div>
+
+    <div class="hero-title-wrap">
+      <h1 class="hero-title">
+        <span class="row">Real <span class="out">Estate</span></span>
+        <span class="row indent"><span class="red">Svizzero.</span></span>
+        <span class="row">Reso <span class="slash">/</span> Innovativo.</span>
+      </h1>
+    </div>
+
+    <div class="hero-bottom">
+      <div>
+        <p class="hero-lede">
+          Fenice Holding genera <em>valore aggiunto</em> nel mercato immobiliare svizzero
+          attraverso riqualificazione strutturale ed energetica, ingegneria finanziaria e
+          accesso strutturato alle opportunità.
+        </p>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">03<span>.</span></div>
+        <div class="stat-label">società integrate · una visione</div>
+      </div>
+      <div class="hero-action">
+        <a href="#gruppo">
+          <span>Esplora il Gruppo</span>
+          <small>↓ scroll</small>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>RIQUALIFICAZIONE STRUTTURALE</span><span>INGEGNERIA FINANZIARIA</span>
+    <span>ASSET MANAGEMENT</span><span>MODULI BREVETTATI</span>
+    <span>SOSTENIBILITÀ</span><span>RENDIMENTI RESILIENTI</span>
+    <span>RIQUALIFICAZIONE STRUTTURALE</span><span>INGEGNERIA FINANZIARIA</span>
+    <span>ASSET MANAGEMENT</span><span>MODULI BREVETTATI</span>
+    <span>SOSTENIBILITÀ</span><span>RENDIMENTI RESILIENTI</span>
+  </div>
+</div>
+
+<section class="intro" id="gruppo">
+  <div>
+    <div class="section-marker">Il Gruppo · 02</div>
+    <h2>Tre <em>società.</em><br>Una direzione.</h2>
+  </div>
+  <div>
+    <p>
+      Fenice Holding coordina e valorizza tre società del gruppo, ciascuna specializzata in ambiti distinti
+      per offrire soluzioni integrate e sinergiche nel mercato immobiliare svizzero.
+    </p>
+    <p>
+      Uniamo competenze finanziarie, tecniche e di asset management per generare rendimenti resilienti
+      a medio-lungo termine, con un approccio rigoroso e trasparente.
+    </p>
+    <div class="leadership">
+      <div>
+        <div class="leader-name">Federico Cappelletti</div>
+        <div class="leader-role">Presidente</div>
+      </div>
+      <div>
+        <div class="leader-name">Sebastiano Andreoli</div>
+        <div class="leader-role">Amministratore Delegato</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="companies-section">
+  <div class="companies-head">
+    <h2>Le società<br>del <em>gruppo.</em></h2>
+    <p>
+      Ogni società opera con autonomia operativa e con un mandato chiaro. Le sinergie nascono dall'integrazione
+      strategica, non dalla sovrapposizione.
+    </p>
+  </div>
+
+  <article class="company-row" id="fenice-re">
+    <div class="num">01</div>
+    <div class="name">Fenice<br>Real Estate <small>Asset Management</small></div>
+    <div class="desc">Patrimoni immobiliari per investitori istituzionali e privati: valutazione, acquisizione, valorizzazione, gestione operativa e dismissione strategica. Massimizziamo il rendimento e riduciamo i rischi.</div>
+    <div class="tags">
+      <span>Valuation</span><span>Asset Mgmt</span><span>Reqal.</span><span>Reporting</span>
+    </div>
+    <div class="arrow">→</div>
+  </article>
+
+  <article class="company-row expand-red" id="blue-lake">
+    <div class="num" style="color:white">02</div>
+    <div class="name">Blue Lake<br>Capital <small style="color:rgba(255,255,255,0.7)">Investment & Partecipazioni</small></div>
+    <div class="desc">Acquisizione e gestione di partecipazioni in aziende e progetti immobiliari ad alto potenziale. Approccio attivo e sostenibile basato su analisi finanziaria rigorosa, gestione professionale e partnership locali.</div>
+    <div class="tags">
+      <span>Private Equity</span><span>RE Dev</span><span>Partnerships</span><span>Long-Term</span>
+    </div>
+    <div class="arrow">→</div>
+  </article>
+
+  <article class="company-row" id="madi">
+    <div class="num">03</div>
+    <div class="name">MADI <small>Modular & Deployable</small></div>
+    <div class="desc">Moduli prefabbricati e case dispiegabili brevettate. Materiali ad alte prestazioni, sistemi sostenibili e tecnologie smart per soluzioni rapide, efficienti, adattabili. Servizio chiavi in mano.</div>
+    <div class="tags">
+      <span>Patent</span><span>Smart</span><span>Turnkey</span><span>Sustainable</span>
+    </div>
+    <div class="arrow">→</div>
+  </article>
+</section>
+
+<section class="manifesto">
+  <div class="manifesto-inner">
+    <div>
+      <div class="section-marker" style="color:var(--red)">Manifesto · 03</div>
+      <h2>Costruiamo<br>il <em>valore</em><br>nel tempo.</h2>
+    </div>
+    <div class="manifesto-grid">
+      <div>
+        <h3><span class="num">01</span>Rigore</h3>
+        <p>Analisi finanziaria, due diligence tecnica e governance trasparente come fondamenta di ogni operazione.</p>
+      </div>
+      <div>
+        <h3><span class="num">02</span>Innovazione</h3>
+        <p>Tecnologie costruttive, materiali ad alte prestazioni, ingegneria finanziaria al servizio del valore.</p>
+      </div>
+      <div>
+        <h3><span class="num">03</span>Sostenibilità</h3>
+        <p>Riqualificazione energetica e modelli operativi che riducono impatto ambientale e costi nel tempo.</p>
+      </div>
+      <div>
+        <h3><span class="num">04</span>Visione</h3>
+        <p>Orizzonte medio-lungo, partnership locali, una strategia che integra le tre società del gruppo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contatti">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="big">Fenice<br><em>Holding</em> SA</div>
+      <p>Real estate svizzero. Riqualificazione, ingegneria finanziaria, innovazione modulare. Lugano · Zürich.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Gruppo</h4>
+      <a href="#fenice-re">Fenice Real Estate</a>
+      <a href="#blue-lake">Blue Lake Capital</a>
+      <a href="#madi">MADI</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contatti</h4>
+      <a href="mailto:info@fenice-holding.ch">info@fenice-holding.ch</a>
+      <a href="tel:+41000000000">+41 (0)00 000 00 00</a>
+    </div>
+    <div class="footer-col">
+      <h4>Network</h4>
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span>© 2026 Fenice Holding SA · Lugano CH</span>
+    <span>Privacy · Cookie · Impressum</span>
+  </div>
+</footer>
+
+</body>
+</html>
