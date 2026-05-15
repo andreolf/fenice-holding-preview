@@ -131,15 +131,15 @@
 
   /* ============ HERO ============ */
   .hero {
-    min-height: 100vh;
+    min-height: 115vh;
     padding: 9rem 3rem 4rem;
     display: grid;
     grid-template-columns: 1.25fr 1fr;
     gap: 5rem;
     align-items: center;
     position: relative;
-    perspective: 1500px;
-    perspective-origin: 62% 28%;
+    perspective: 2000px;
+    perspective-origin: 58% 22%;
   }
   /* Hero must NOT use translateY from generic [data-io] — it kills descendant 3D under perspective */
   .hero[data-io]:not(.is-inview) {
@@ -190,6 +190,35 @@
     will-change: transform;
   }
   .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+  .scroll-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 2.25rem;
+    text-decoration: none;
+    color: var(--ink-mute);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: opacity 0.35s ease, color 0.25s ease;
+  }
+  .scroll-hint:hover { color: var(--red); }
+  .scroll-hint__line {
+    width: 1px;
+    height: 2.5rem;
+    background: linear-gradient(180deg, var(--red), transparent);
+    animation: scroll-hint-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes scroll-hint-pulse {
+    0%, 100% { transform: scaleY(0.55); opacity: 0.45; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint__line { animation: none; opacity: 0.5; }
+  }
   .btn {
     padding: 1rem 1.8rem; border: 1px solid var(--ink);
     background: var(--ink); color: var(--paper);
@@ -210,10 +239,12 @@
     position: relative;
     aspect-ratio: 3/4;
     overflow: hidden;
-    box-shadow: 0 30px 60px -20px rgba(14,14,14,0.25);
+    box-shadow:
+      0 28px 56px -24px rgba(14,14,14,0.22),
+      0 0 0 1px rgba(14,14,14,0.06);
     transform-style: preserve-3d;
     will-change: transform;
-    transform-origin: 50% 50%;
+    transform-origin: 50% 88%;
     transition: box-shadow 0.45s ease;
     backface-visibility: hidden;
   }
@@ -721,6 +752,10 @@
       </a>
       <a href="#contatti" class="btn btn-ghost" data-it="Contattaci" data-en="Contact us">Contattaci</a>
     </div>
+    <a href="#gruppo" class="scroll-hint js-scroll-hint" aria-label="Scorri verso il gruppo">
+      <span data-it="Scorri" data-en="Scroll">Scorri</span>
+      <span class="scroll-hint__line" aria-hidden="true"></span>
+    </a>
   </div>
   <div class="hero-figure" role="img" aria-label="Lago di Lugano, cancello — foto Ryan Klaus / Unsplash">
     <div class="hero-figure__media" aria-hidden="true"></div>
