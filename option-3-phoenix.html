@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fenice Holding SA — Phoenix</title>
+<title data-it="Fenice Holding SA — Phoenix" data-en="Fenice Holding SA — Phoenix">Fenice Holding SA — Phoenix</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -41,6 +41,8 @@
   .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
     padding: 1.4rem 2.5rem;
     background: rgba(246, 241, 234, 0.85);
     backdrop-filter: blur(14px);
@@ -453,6 +455,69 @@
     color: rgba(246, 241, 234, 0.7);
   }
 
+  .case-studies {
+    padding: 6rem 2.5rem;
+    background: var(--cream-warm);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-studies__inner { max-width: 1200px; margin: 0 auto; }
+  .case-studies__head {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 2.5rem;
+    margin-bottom: 3rem; align-items: end;
+  }
+  .case-studies__head h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.05; font-weight: 400;
+  }
+  .case-studies__head h2 em { font-style: italic; color: var(--red); }
+  .case-studies__head p { color: var(--ink-soft); font-size: 1.05rem; line-height: 1.6; }
+  .case-studies__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+  }
+  .case-card-ph {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 1.75rem 1.5rem;
+    min-height: 15rem;
+    display: flex; flex-direction: column;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .case-card-ph:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(28,20,19,0.08);
+  }
+  .case-card-ph .k {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);
+    margin-bottom: 0.6rem;
+  }
+  .case-card-ph h3 {
+    font-family: 'Instrument Serif', serif; font-size: 1.45rem;
+    margin-bottom: 0.75rem; font-weight: 400;
+  }
+  .case-card-ph p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; flex: 1; }
+  .case-card-ph .meta {
+    margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--rule);
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ember);
+  }
+
+  [data-io] { opacity: 0; transform: translateY(1rem); transition: opacity .7s ease, transform .7s ease; }
+  [data-io].is-inview { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-io] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+  .lang-switch { display: flex; gap: 0.35rem; align-items: center; }
+  .lang-btn {
+    border: 1px solid var(--rule); background: var(--cream);
+    color: var(--ink-soft); font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.35rem 0.55rem; border-radius: 999px; cursor: pointer;
+  }
+  .lang-btn[aria-pressed="true"] { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
   /* ============ CTA ============ */
   .cta {
     padding: 7rem 2.5rem; text-align: center;
@@ -521,6 +586,8 @@
     .companies-grid { grid-template-columns: 1fr; }
     .company-card { min-height: auto; }
     .leadership { grid-template-columns: 1fr; }
+    .case-studies__head { grid-template-columns: 1fr; }
+    .case-studies__grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .footer-base { flex-direction: column; gap: 0.8rem; }
   }
@@ -529,23 +596,25 @@
 <body>
 
 <header class="nav">
-  <div class="brand">
-    <svg class="phoenix-icon" viewBox="0 0 40 40" fill="none">
-      <path d="M20 4 L28 14 L24 16 L32 22 L26 24 L34 32 L20 28 L6 32 L14 24 L8 22 L16 16 L12 14 Z"
-            fill="#c8362c" stroke="#8c1f17" stroke-width="0.5" stroke-linejoin="round"/>
-    </svg>
+  <a href="/index.html" class="brand" style="text-decoration:none;color:inherit;">
+    <img src="/assets/fenice-logo.png" alt="" width="30" height="30" style="object-fit:contain;border-radius:8px;" />
     Fenice <em>Holding</em>
-  </div>
+  </a>
   <ul class="nav-links">
-    <li><a href="#gruppo">Gruppo</a></li>
-    <li><a href="#fenice-re">Fenice RE</a></li>
-    <li><a href="#blue-lake">Blue Lake</a></li>
-    <li><a href="#madi">MADI</a></li>
-    <li><a href="#contatti" class="nav-cta">Parliamo →</a></li>
+    <li><a href="#gruppo" data-it="Gruppo" data-en="Group">Gruppo</a></li>
+    <li><a href="#fenice-re" data-it="Fenice RE" data-en="Fenice RE">Fenice RE</a></li>
+    <li><a href="#blue-lake" data-it="Blue Lake" data-en="Blue Lake">Blue Lake</a></li>
+    <li><a href="#madi" data-it="MADI" data-en="MADI">MADI</a></li>
+    <li><a href="#case-studies" data-it="Casi" data-en="Cases">Casi</a></li>
+    <li><a href="#contatti" class="nav-cta" data-it="Parliamo →" data-en="Let&apos;s talk →">Parliamo →</a></li>
   </ul>
+  <div class="lang-switch" aria-label="Lingua">
+    <button type="button" class="lang-btn" data-lang="it" aria-pressed="true">IT</button>
+    <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
 </header>
 
-<section class="hero">
+<section class="hero" data-io>
   <div class="hero-bg-shape"></div>
   <div class="hero-content">
     <div class="eyebrow">Real Estate · Svizzera · 2026</div>
@@ -595,7 +664,7 @@
   </div>
 </div>
 
-<section class="intro" id="gruppo">
+<section class="intro" id="gruppo" data-io>
   <div>
     <div class="section-marker">Il Gruppo</div>
     <h2>Tre società.<br><em>Una visione.</em></h2>
@@ -628,7 +697,7 @@
   </div>
 </section>
 
-<section class="companies">
+<section class="companies" data-io>
   <div class="companies-head">
     <div class="section-marker">Le società</div>
     <h2>Specializzate, ma <em>integrate.</em></h2>
@@ -682,7 +751,36 @@
   </div>
 </section>
 
-<section class="manifesto">
+<section class="case-studies" id="case-studies" data-io>
+  <div class="case-studies__inner">
+    <div class="case-studies__head">
+      <h2 data-it-html="Tre casi, &lt;em&gt;una squadra&lt;/em&gt;." data-en-html="Three cases, &lt;em&gt;one team&lt;/em&gt;.">Tre casi, <em>una squadra</em>.</h2>
+      <p data-it="Dal retrofit urbano al capitale strutturato, fino al deploy modulare: il gruppo Fenice su percorsi ad alta complessità." data-en="From urban retrofit to structured capital, through modular deployment: the Fenice group on high-complexity paths.">Dal retrofit urbano al capitale strutturato, fino al deploy modulare: il gruppo Fenice su percorsi ad alta complessità.</p>
+    </div>
+    <div class="case-studies__grid">
+      <article class="case-card-ph" data-io data-io-delay="50">
+        <div class="k">Fenice RE</div>
+        <h3 data-it="Portafoglio urbano Ticino" data-en="Urban portfolio Ticino">Portafoglio urbano Ticino</h3>
+        <p data-it="Capex, energia e ridefinizione spazi con reporting per investitori istituzionali." data-en="Capex, energy and space reprogramming with reporting for institutional investors.">Capex, energia e ridefinizione spazi con reporting per investitori istituzionali.</p>
+        <div class="meta" data-it="Performance · ESG" data-en="Performance · ESG">Performance · ESG</div>
+      </article>
+      <article class="case-card-ph" data-io data-io-delay="100">
+        <div class="k">Blue Lake</div>
+        <h3 data-it="Struttura di capitale" data-en="Capital structure">Struttura di capitale</h3>
+        <p data-it="Equity e mezzanine con governance milestone su asset ricettivo-residenziale." data-en="Equity and mezzanine with milestone governance on a hospitality-residential asset.">Equity e mezzanine con governance milestone su asset ricettivo-residenziale.</p>
+        <div class="meta" data-it="Lugano · deal flow" data-en="Lugano · deal flow">Lugano · deal flow</div>
+      </article>
+      <article class="case-card-ph" data-io data-io-delay="150">
+        <div class="k">MADI</div>
+        <h3 data-it="Risposta modulare" data-en="Modular response">Risposta modulare</h3>
+        <p data-it="Moduli certificati, logistica e permessi su timeline compressa." data-en="Certified modules, logistics and permits on a compressed timeline.">Moduli certificati, logistica e permessi su timeline compressa.</p>
+        <div class="meta" data-it="Chiavi in mano" data-en="Turnkey">Chiavi in mano</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="manifesto" data-io>
   <div class="manifesto-inner">
     <div>
       <div class="section-marker">Il nostro DNA</div>
@@ -721,7 +819,7 @@
   </div>
 </section>
 
-<section class="cta" id="contatti">
+<section class="cta" id="contatti" data-io>
   <div class="section-marker" style="justify-content:center;">Iniziamo</div>
   <h2 style="margin-top:1.5rem;">Costruiamo insieme<br>il prossimo <em>capitolo.</em></h2>
   <p>Per opportunità d'investimento, partnership strategiche o per saperne di più sul gruppo Fenice.</p>
@@ -733,35 +831,36 @@
   </a>
 </section>
 
-<footer>
+<footer data-io>
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="name">Fenice <em>Holding</em> SA</div>
       <p>Real estate svizzero. Riqualificazione, ingegneria finanziaria, innovazione modulare.</p>
     </div>
     <div class="footer-col">
-      <h4>Gruppo</h4>
+      <h4 data-it="Gruppo" data-en="Group">Gruppo</h4>
       <a href="#fenice-re">Fenice Real Estate</a>
       <a href="#blue-lake">Blue Lake Capital</a>
       <a href="#madi">MADI</a>
     </div>
     <div class="footer-col">
-      <h4>Contatti</h4>
+      <h4 data-it="Contatti" data-en="Contact">Contatti</h4>
       <a href="mailto:info@fenice-holding.ch">info@fenice-holding.ch</a>
       <a href="tel:+41000000000">+41 (0)00 000 00 00</a>
       <a href="#">Lugano · Zürich</a>
     </div>
     <div class="footer-col">
-      <h4>Network</h4>
+      <h4 data-it="Network" data-en="Network">Network</h4>
       <a href="#">LinkedIn</a>
       <a href="#">Instagram</a>
     </div>
   </div>
   <div class="footer-base">
-    <span>© 2026 Fenice Holding SA</span>
-    <span>Privacy · Cookie · Impressum</span>
+    <span data-it="© 2026 Fenice Holding SA" data-en="© 2026 Fenice Holding SA">© 2026 Fenice Holding SA</span>
+    <span data-it="Privacy · Cookie · Impressum" data-en="Privacy · Cookies · Imprint">Privacy · Cookie · Impressum</span>
   </div>
 </footer>
 
+<script src="/site.js" defer></script>
 </body>
 </html>

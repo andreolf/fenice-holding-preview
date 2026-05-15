@@ -303,7 +303,7 @@ main {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("assets/logo-fenice@1x.png") 100% 6% / min(46vw, 340px) no-repeat;
+  background: url("/assets/fenice-logo.png") 100% 6% / min(46vw, 340px) no-repeat;
   opacity: 0.042;
   pointer-events: none;
   z-index: 0;
