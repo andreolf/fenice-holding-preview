@@ -89,23 +89,42 @@
     });
   }
 
-  function initHeroParallax() {
-    var heroFig = document.querySelector(".hero-figure");
-    if (!heroFig) return;
+  function initScrollParallax() {
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
+
+    var heroFig = document.querySelector(".hero-figure");
+    var heroMedia = document.querySelector(".hero-figure__media");
+    var hero = document.querySelector(".hero");
+    if (!heroFig || !hero || !heroMedia) return;
 
     var pending = false;
     var mx = 0;
     var my = 0;
-    var hero = document.querySelector(".hero");
 
     function apply() {
       pending = false;
-      var r = heroFig.getBoundingClientRect();
       var vh = window.innerHeight || 1;
       var vw = window.innerWidth || 1;
-      if (r.bottom < -120 || r.top > vh + 120) return;
+      var rH = hero.getBoundingClientRect();
+      if (rH.bottom < -100 || rH.top > vh + 80) {
+        heroMedia.style.transform = "";
+        heroFig.style.transform = "";
+        return;
+      }
+
+      var span = Math.max(vh + rH.height, 1);
+      var prog = (vh - rH.top) / span;
+      prog = Math.max(0, Math.min(1, prog));
+      var drift = (prog - 0.28) * 120;
+      heroMedia.style.transform =
+        "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.16)";
+
+      var r = heroFig.getBoundingClientRect();
+      if (r.bottom < -120 || r.top > vh + 120) {
+        heroFig.style.transform = "";
+        return;
+      }
 
       var centerY = r.top + r.height * 0.42;
       var t = (vh * 0.48 - centerY) / (vh * 0.72);
@@ -129,26 +148,24 @@
       }
     }
 
-    if (hero) {
-      hero.addEventListener(
-        "pointermove",
-        function (e) {
-          var rect = hero.getBoundingClientRect();
-          if (rect.width < 1 || rect.height < 1) return;
-          mx = (e.clientX - rect.left) / rect.width - 0.5;
-          my = (e.clientY - rect.top) / rect.height - 0.5;
-          mx = Math.max(-0.5, Math.min(0.5, mx)) * 2;
-          my = Math.max(-0.5, Math.min(0.5, my)) * 2;
-          tick();
-        },
-        { passive: true }
-      );
-      hero.addEventListener("pointerleave", function () {
-        mx = 0;
-        my = 0;
+    hero.addEventListener(
+      "pointermove",
+      function (e) {
+        var rect = hero.getBoundingClientRect();
+        if (rect.width < 1 || rect.height < 1) return;
+        mx = (e.clientX - rect.left) / rect.width - 0.5;
+        my = (e.clientY - rect.top) / rect.height - 0.5;
+        mx = Math.max(-0.5, Math.min(0.5, mx)) * 2;
+        my = Math.max(-0.5, Math.min(0.5, my)) * 2;
         tick();
-      });
-    }
+      },
+      { passive: true }
+    );
+    hero.addEventListener("pointerleave", function () {
+      mx = 0;
+      my = 0;
+      tick();
+    });
 
     window.addEventListener("scroll", tick, { passive: true });
     window.addEventListener("resize", tick, { passive: true });
@@ -162,7 +179,7 @@
     bindLangButtons();
     applyTitle();
     initScrollIO();
-    initHeroParallax();
+    initScrollParallax();
   }
 
   if (document.readyState === "loading") {

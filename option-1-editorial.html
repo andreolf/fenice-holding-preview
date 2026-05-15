@@ -173,6 +173,11 @@
     font-size: 1.12rem; max-width: 36rem; color: var(--ink-soft);
     margin-bottom: 2.8rem; font-weight: 300; line-height: 1.6;
   }
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    will-change: transform;
+  }
   .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
   .btn {
     padding: 1rem 1.8rem; border: 1px solid var(--ink);
@@ -193,9 +198,6 @@
   .hero-figure {
     position: relative;
     aspect-ratio: 3/4;
-    background:
-      linear-gradient(180deg, rgba(14,14,14,0.15) 0%, rgba(14,14,14,0.55) 100%),
-      url(assets/hero-lugano-gate.png) center / cover no-repeat;
     overflow: hidden;
     box-shadow: 0 30px 60px -20px rgba(14,14,14,0.25);
     transform-style: preserve-3d;
@@ -204,16 +206,37 @@
     transition: box-shadow 0.45s ease;
     backface-visibility: hidden;
   }
+  .hero-figure__media {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: -14%;
+    bottom: -14%;
+    background: url(assets/hero-lugano-gate.png) center / cover no-repeat;
+    transform-origin: 50% 45%;
+    will-change: transform;
+    z-index: 0;
+  }
+  .hero-figure__veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(14,14,14,0.15) 0%, rgba(14,14,14,0.55) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
   .hero-figure::before {
     content: ''; position: absolute; inset: 0;
     background-image:
       repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 3px);
+    z-index: 2;
+    pointer-events: none;
   }
   .hero-figure-mark {
     position: absolute; top: 1.5rem; left: 1.5rem;
     height: 48px; width: auto;
     display: block;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+    z-index: 3;
   }
   .hero-figure-caption {
     position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
@@ -221,6 +244,7 @@
     color: rgba(255,255,255,0.92); font-family: 'Outfit', sans-serif;
     font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
     font-weight: 400;
+    z-index: 3;
   }
   .hero-figure-caption .num {
     font-family: 'Cormorant Garamond', serif; font-size: 2.4rem;
@@ -453,6 +477,40 @@
   .values-watermark {
     position: absolute; right: -8rem; bottom: -10rem;
     width: 35rem; height: auto; opacity: 0.06; pointer-events: none;
+    will-change: transform;
+  }
+
+  /* Scroll-linked motion (Chrome / Safari recenti) — effetto “scroll storytelling” */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      @keyframes fenice-hero-copy-path {
+        from { transform: translateY(2.25rem); }
+        to { transform: translateY(-2.75rem); }
+      }
+      @keyframes fenice-intro-shift {
+        from { transform: translateY(1.5rem); opacity: 0.92; }
+        to { transform: translateY(-1.25rem); opacity: 1; }
+      }
+      @keyframes fenice-wm-drift {
+        from { transform: translate(4%, 6%) rotate(-3deg) scale(1); }
+        to { transform: translate(-6%, -4%) rotate(4deg) scale(1.05); }
+      }
+      .hero-copy {
+        animation: fenice-hero-copy-path linear both;
+        animation-timeline: view();
+        animation-range: entry 0% exit 30%;
+      }
+      .intro > div:last-child {
+        animation: fenice-intro-shift linear both;
+        animation-timeline: view();
+        animation-range: entry 0% contain 50%;
+      }
+      .values-watermark {
+        animation: fenice-wm-drift linear both;
+        animation-timeline: view();
+        animation-range: entry 0% contain 85%;
+      }
+    }
   }
 
   /* ============ CTA ============ */
@@ -633,7 +691,7 @@
 
 <section class="hero" id="top" data-io>
   <div class="hero-meta" data-it="CH · LUGANO · CORSO ELVEZIA 27 · 2026" data-en="CH · LUGANO · CORSO ELVEZIA 27 · 2026">CH · LUGANO · CORSO ELVEZIA 27 · 2026</div>
-  <div>
+  <div class="hero-copy">
     <div class="eyebrow" data-it="Real Estate · Svizzera" data-en="Real Estate · Switzerland">Real Estate · Svizzera</div>
     <h1 class="display" data-it-html="Valore aggiunto&lt;br&gt;nel &lt;em&gt;real estate&lt;/em&gt;&lt;br&gt;svizzero." data-en-html="Added value&lt;br&gt;in &lt;em&gt;Swiss&lt;/em&gt;&lt;br&gt;real estate.">Valore aggiunto<br>nel <em>real estate</em><br>svizzero.</h1>
     <p class="hero-lede"
@@ -654,6 +712,8 @@
     </div>
   </div>
   <div class="hero-figure" role="img" aria-label="Lago di Lugano, cancello — foto Ryan Klaus / Unsplash">
+    <div class="hero-figure__media" aria-hidden="true"></div>
+    <div class="hero-figure__veil" aria-hidden="true"></div>
     <img class="hero-figure-mark" src="assets/fenice-logo-white.png" alt="" />
     <div class="hero-figure-caption">
       <div data-it-html="Sede istituzionale&lt;br&gt;Lugano · Corso Elvezia 27" data-en-html="Registered office&lt;br&gt;Lugano · Corso Elvezia 27">Sede istituzionale<br>Lugano · Corso Elvezia 27</div>
