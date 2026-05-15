@@ -96,7 +96,7 @@
     var heroFig = document.querySelector(".hero-figure");
     var heroMedia = document.querySelector(".hero-figure__media");
     var hero = document.querySelector(".hero");
-    if (!heroFig || !hero || !heroMedia) return;
+    if (!heroFig || !hero) return;
 
     var pending = false;
     var mx = 0;
@@ -108,7 +108,7 @@
       var vw = window.innerWidth || 1;
       var rH = hero.getBoundingClientRect();
       if (rH.bottom < -100 || rH.top > vh + 80) {
-        heroMedia.style.transform = "";
+        if (heroMedia) heroMedia.style.transform = "";
         heroFig.style.transform = "";
         return;
       }
@@ -116,9 +116,11 @@
       var span = Math.max(vh + rH.height, 1);
       var prog = (vh - rH.top) / span;
       prog = Math.max(0, Math.min(1, prog));
-      var drift = (prog - 0.28) * 120;
-      heroMedia.style.transform =
-        "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.16)";
+      var drift = (prog - 0.28) * 165;
+      if (heroMedia) {
+        heroMedia.style.transform =
+          "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.16)";
+      }
 
       var r = heroFig.getBoundingClientRect();
       if (r.bottom < -120 || r.top > vh + 120) {

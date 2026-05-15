@@ -141,6 +141,17 @@
     perspective: 1500px;
     perspective-origin: 62% 28%;
   }
+  /* Hero must NOT use translateY from generic [data-io] — it kills descendant 3D under perspective */
+  .hero[data-io]:not(.is-inview) {
+    opacity: 0;
+    transform: none;
+    transition: opacity 0.75s ease;
+  }
+  .hero[data-io].is-inview {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.75s ease;
+  }
   .hero::before {
     content: ''; position: absolute; top: 0; right: 0; width: 1px; height: 100%;
     background: var(--rule);
