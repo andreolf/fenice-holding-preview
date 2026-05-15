@@ -127,6 +127,9 @@
       transform: none !important;
       transition: none !important;
     }
+    .hero-figure {
+      transform: rotateX(4deg);
+    }
   }
 
   /* ============ HERO ============ */
@@ -140,6 +143,8 @@
     position: relative;
     perspective: 2000px;
     perspective-origin: 58% 22%;
+    overflow-x: visible;
+    isolation: isolate;
   }
   /* Hero must NOT use translateY from generic [data-io] — it kills descendant 3D under perspective */
   .hero[data-io]:not(.is-inview) {
@@ -186,7 +191,7 @@
   }
   .hero-copy {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     will-change: transform;
   }
   .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
@@ -238,7 +243,9 @@
   .hero-figure {
     position: relative;
     aspect-ratio: 3/4;
-    overflow: hidden;
+    /* overflow:hidden clips 3D — kills the “opening” card effect */
+    overflow: visible;
+    margin: -2vh 0;
     box-shadow:
       0 28px 56px -24px rgba(14,14,14,0.22),
       0 0 0 1px rgba(14,14,14,0.06);
@@ -247,6 +254,7 @@
     transform-origin: 50% 88%;
     transition: box-shadow 0.45s ease;
     backface-visibility: hidden;
+    z-index: 0;
   }
   .hero-figure__media {
     position: absolute;

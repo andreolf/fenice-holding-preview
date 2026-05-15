@@ -114,21 +114,21 @@
       }
 
       var scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-      var openRaw = Math.min(1, scrollY / (vh * 0.52));
+      var openRaw = Math.min(1, scrollY / (vh * 0.36));
       var openEase = openRaw * openRaw * (3 - 2 * openRaw);
 
       var span = Math.max(vh + rH.height, 1);
       var prog = (vh - rH.top) / span;
       prog = Math.max(0, Math.min(1, prog));
-      var drift = (prog - 0.28) * 165;
+      var drift = (prog - 0.28) * 140;
       if (heroMedia) {
-        var mediaTilt = (1 - openEase) * -14;
+        var mediaTilt = (1 - openEase) * -9;
         heroMedia.style.transform =
           "translate3d(0," +
           drift.toFixed(1) +
           "px,0) rotateX(" +
           mediaTilt.toFixed(2) +
-          "deg) scale(1.18)";
+          "deg) scale(1.12)";
       }
 
       var r = heroFig.getBoundingClientRect();
@@ -141,17 +141,17 @@
       var t = (vh * 0.48 - centerY) / (vh * 0.72);
       t = Math.max(-1, Math.min(1, t));
 
-      var openRx = (1 - openEase) * 28;
-      var openTz = (1 - openEase) * -72;
-      var openScale = 0.84 + openEase * 0.2;
+      var openRx = (1 - openEase) * 16;
+      var openTz = (1 - openEase) * -34;
+      var openScale = 0.9 + openEase * 0.12;
 
-      var rx = openRx + t * 5 + my * 3.5;
+      var rx = openRx + t * 4 + my * 2.5;
       var centerX = r.left + r.width / 2;
       var u = (centerX - vw * 0.5) / (Math.max(vw, 1) * 0.55);
       u = Math.max(-1, Math.min(1, u));
-      var ry = u * -8 + mx * 4.5;
-      var rz = (1 - openEase) * -3.2;
-      var sc = openScale * (1.01 + (1 - Math.abs(t)) * 0.04);
+      var ry = u * -5 + mx * 3;
+      var rz = (1 - openEase) * -2;
+      var sc = openScale * (1.01 + (1 - Math.abs(t)) * 0.03);
 
       heroFig.style.transform =
         "translateZ(" +
