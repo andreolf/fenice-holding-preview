@@ -1,0 +1,13 @@
+---
+description: After site changes, commit and push so GitHub Pages stays current
+alwaysApply: true
+---
+
+# GitHub Pages — always ship
+
+This repo is a static **GitHub Pages** preview (`main` → Pages). When you change anything that affects the live site (`*.html`, `site.js`, `assets/`, `index.html`):
+
+1. **Commit** with a clear message (user expects deploys without a separate ask).
+2. **`git push origin main`** when the branch tracks `origin/main` (or the configured Pages branch).
+
+Skip only if the user explicitly says not to push, or there is nothing to commit. Do not change git config; do not force-push to `main`.
