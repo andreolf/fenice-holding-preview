@@ -95,13 +95,59 @@
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
-    function tick() {
+    var pending = false;
+    var mx = 0;
+    var my = 0;
+    var hero = document.querySelector(".hero");
+
+    function apply() {
+      pending = false;
       var r = heroFig.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) return;
-      var mid = (r.top + r.height * 0.35) / window.innerHeight;
-      var tilt = Math.max(-4, Math.min(5, (0.5 - mid) * 10));
+      var vh = window.innerHeight || 1;
+      var vw = window.innerWidth || 1;
+      if (r.bottom < -120 || r.top > vh + 120) return;
+
+      var centerY = r.top + r.height * 0.42;
+      var t = (vh * 0.48 - centerY) / (vh * 0.72);
+      t = Math.max(-1, Math.min(1, t));
+      var rx = t * 12 + my * 4;
+
+      var centerX = r.left + r.width / 2;
+      var u = (centerX - vw * 0.5) / (Math.max(vw, 1) * 0.55);
+      u = Math.max(-1, Math.min(1, u));
+      var ry = u * -9 + mx * 5;
+
+      var sc = 1.02 + (1 - Math.abs(t)) * 0.05;
       heroFig.style.transform =
-        "perspective(1200px) rotateX(" + tilt.toFixed(2) + "deg) scale(1.02)";
+        "rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) scale(" + sc.toFixed(3) + ")";
+    }
+
+    function tick() {
+      if (!pending) {
+        pending = true;
+        requestAnimationFrame(apply);
+      }
+    }
+
+    if (hero) {
+      hero.addEventListener(
+        "pointermove",
+        function (e) {
+          var rect = hero.getBoundingClientRect();
+          if (rect.width < 1 || rect.height < 1) return;
+          mx = (e.clientX - rect.left) / rect.width - 0.5;
+          my = (e.clientY - rect.top) / rect.height - 0.5;
+          mx = Math.max(-0.5, Math.min(0.5, mx)) * 2;
+          my = Math.max(-0.5, Math.min(0.5, my)) * 2;
+          tick();
+        },
+        { passive: true }
+      );
+      hero.addEventListener("pointerleave", function () {
+        mx = 0;
+        my = 0;
+        tick();
+      });
     }
 
     window.addEventListener("scroll", tick, { passive: true });
