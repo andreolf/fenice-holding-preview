@@ -89,6 +89,26 @@
     });
   }
 
+  function initHeroParallax() {
+    var heroFig = document.querySelector(".hero-figure");
+    if (!heroFig) return;
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    function tick() {
+      var r = heroFig.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      var mid = (r.top + r.height * 0.35) / window.innerHeight;
+      var tilt = Math.max(-4, Math.min(5, (0.5 - mid) * 10));
+      heroFig.style.transform =
+        "perspective(1200px) rotateX(" + tilt.toFixed(2) + "deg) scale(1.02)";
+    }
+
+    window.addEventListener("scroll", tick, { passive: true });
+    window.addEventListener("resize", tick, { passive: true });
+    tick();
+  }
+
   function init() {
     document.documentElement.lang = getLang();
     applyI18nStrings();
@@ -96,6 +116,7 @@
     bindLangButtons();
     applyTitle();
     initScrollIO();
+    initHeroParallax();
   }
 
   if (document.readyState === "loading") {
