@@ -49,25 +49,33 @@
     border-bottom: 1px solid var(--rule);
   }
   .brand {
-    display: flex; align-items: center; gap: 0.8rem;
+    display: block;
     text-decoration: none; color: var(--ink);
   }
-  .brand img {
-    height: 38px; width: auto;
-    transition: transform .6s cubic-bezier(.4,0,.2,1);
-  }
-  .brand:hover img { transform: rotate(-3deg) scale(1.05); }
-  .brand-text {
+  .brand-lockup { display: block; }
+  .brand-lockup__title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem; font-weight: 500;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    line-height: 1;
+    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1.15;
   }
-  .brand-text small {
-    display: block; font-family: 'Outfit', sans-serif;
-    font-size: 0.62rem; letter-spacing: 0.22em;
-    color: var(--ink-mute); font-weight: 400;
-    margin-top: 0.25rem;
+  .brand-lockup__title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--red);
+    letter-spacing: 0.12em;
+  }
+  .brand-lockup__tag {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+    margin-top: 0.35rem;
   }
   nav { justify-self: center; }
   nav ul { display: flex; gap: 2.4rem; list-style: none; }
@@ -184,8 +192,8 @@
     position: relative;
     aspect-ratio: 3/4;
     background:
-      linear-gradient(180deg, rgba(218,50,51,0.0) 0%, rgba(14,14,14,0.45) 100%),
-      radial-gradient(ellipse at 30% 20%, #d4cec4 0%, #8a7d6f 55%, #2d2622 100%);
+      linear-gradient(180deg, rgba(14,14,14,0.15) 0%, rgba(14,14,14,0.55) 100%),
+      url(assets/hero-lugano-gate.png) center / cover no-repeat;
     overflow: hidden;
     box-shadow: 0 30px 60px -20px rgba(14,14,14,0.25);
   }
@@ -447,8 +455,7 @@
     .topbar { padding: 1rem 1.5rem; grid-template-columns: 1fr; justify-items: start; gap: 0.75rem; }
     nav { justify-self: start; }
     .nav-tools { justify-self: start; }
-    .brand img { height: 32px; }
-    .brand-text { font-size: 0.95rem; }
+    .brand-lockup__title { font-size: 0.88rem; letter-spacing: 0.16em; }
     nav ul { gap: 1.2rem; flex-wrap: wrap; }
     nav a { font-size: 0.65rem; letter-spacing: 0.12em; }
     .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2rem; }
@@ -468,11 +475,10 @@
 <body>
 
 <header class="topbar">
-  <a href="/index.html" class="brand" aria-label="Anteprime">
-    <img src="/assets/fenice-logo.png" alt="Fenice Holding" />
-    <div class="brand-text">
-      Fenice Holding
-      <small data-it="Real Estate · Svizzera" data-en="Real Estate · Switzerland">Real Estate · Svizzera</small>
+  <a href="#top" class="brand" aria-label="Fenice Holding">
+    <div class="brand-lockup">
+      <span class="brand-lockup__title" data-it-html="Fenice &lt;em&gt;Holding&lt;/em&gt;" data-en-html="Fenice &lt;em&gt;Holding&lt;/em&gt;">Fenice <em>Holding</em></span>
+      <span class="brand-lockup__tag" data-it="Real Estate · Svizzera" data-en="Real Estate · Switzerland">Real Estate · Svizzera</span>
     </div>
   </a>
   <nav>
@@ -514,8 +520,8 @@
       <a href="#contatti" class="btn btn-ghost" data-it="Contattaci" data-en="Contact us">Contattaci</a>
     </div>
   </div>
-  <div class="hero-figure">
-    <img class="hero-figure-mark" src="/assets/fenice-logo-white.png" alt="" />
+  <div class="hero-figure" role="img" aria-label="Lago di Lugano, cancello — foto Ryan Klaus / Unsplash">
+    <img class="hero-figure-mark" src="assets/fenice-logo-white.png" alt="" />
     <div class="hero-figure-caption">
       <div data-it-html="Sede istituzionale&lt;br&gt;Lugano · Corso Elvezia 27" data-en-html="Registered office&lt;br&gt;Lugano · Corso Elvezia 27">Sede istituzionale<br>Lugano · Corso Elvezia 27</div>
       <div class="num">'26</div>
@@ -622,7 +628,7 @@
 </section>
 
 <section class="values" data-io>
-  <img class="values-watermark" src="/assets/fenice-logo-white.png" alt="" />
+  <img class="values-watermark" src="assets/fenice-logo-white.png" alt="" />
   <div>
     <div class="section-label" style="display:flex; align-items:center; gap:0.7rem;">
       <span style="display:inline-block; width:8px; height:8px; background: #ff5a60; border-radius:50%;"></span>
@@ -673,7 +679,7 @@
 <footer data-io>
   <div class="footer-grid">
     <div class="footer-brand-block">
-      <img src="/assets/fenice-logo.png" alt="Fenice Holding" />
+      <img src="assets/fenice-logo.png" alt="" />
       <div class="info">
         <div class="name">Fenice <em>Holding</em> SA</div>
         <p data-it-html="Real estate svizzero&lt;br&gt;Riqualificazione · Investment · Modular" data-en-html="Swiss real estate&lt;br&gt;Retrofitting · investment · modular">Real estate svizzero<br>Riqualificazione · Investment · Modular</p>
@@ -702,6 +708,6 @@
   </div>
 </footer>
 
-<script src="/site.js" defer></script>
+<script src="site.js" defer></script>
 </body>
 </html>
