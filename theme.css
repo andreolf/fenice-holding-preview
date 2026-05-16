@@ -1,0 +1,29 @@
+/* Dark mode — token overrides (load after page-specific :root) */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #131211;
+  --paper-warm: #1c1a18;
+  --ink: #f4f1eb;
+  --ink-soft: #b5aea6;
+  --ink-mute: #8a837a;
+  --red: #e64d4f;
+  --red-deep: #ff6b6d;
+  --red-soft: #3a2426;
+  --rule: #32302c;
+  --rule-soft: #252321;
+  --topbar-bg: rgba(22, 21, 20, 0.94);
+  --values-bg: #0b0a09;
+  --values-fg: #f2efe8;
+  --values-muted: rgba(242, 239, 232, 0.72);
+  --values-dim: rgba(242, 239, 232, 0.55);
+  --values-rule: rgba(242, 239, 232, 0.16);
+  --values-accent: #ff6a6d;
+}
+
+html[data-theme="dark"] .footer-brand-block img {
+  filter: brightness(0) invert(1) opacity(0.9);
+}
+
+html[data-theme="dark"] .values-watermark {
+  opacity: 0.09;
+}

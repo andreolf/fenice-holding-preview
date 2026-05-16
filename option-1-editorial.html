@@ -2,6 +2,15 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8" />
+<script>
+(function () {
+  try {
+    if (localStorage.getItem("fenice-theme") === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  } catch (e) {}
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title data-it="Fenice Holding SA — Real Estate Svizzera" data-en="Fenice Holding SA — Swiss Real Estate">Fenice Holding SA — Real Estate Svizzera</title>
 <meta name="description" content="Fenice Holding SA — Valore aggiunto nel real estate svizzero attraverso riqualificazione, ingegneria finanziaria e innovazione modulare." />
@@ -21,6 +30,13 @@
     --red-soft: #f5e1e0;
     --rule: #e8e3dc;
     --rule-soft: #f0ebe2;
+    --topbar-bg: rgba(251, 250, 247, 0.92);
+    --values-bg: #0e0e0e;
+    --values-fg: #fbfaf7;
+    --values-muted: rgba(251, 250, 247, 0.7);
+    --values-dim: rgba(251, 250, 247, 0.6);
+    --values-rule: rgba(251, 250, 247, 0.18);
+    --values-accent: #ff5a60;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,7 +60,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1.2rem 3rem;
-    background: rgba(251, 250, 247, 0.92);
+    background: var(--topbar-bg);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--rule);
   }
@@ -91,8 +107,15 @@
     background: var(--red); transition: width .4s ease;
   }
   nav a:hover::after { width: 100%; }
-  .nav-tools { justify-self: end; }
-  .lang-switch { display: inline-flex; gap: 0.3rem; }
+  .nav-tools {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .lang-switch,
+  .theme-switch { display: inline-flex; gap: 0.3rem; }
   .lang-btn {
     border: 1px solid var(--rule);
     background: transparent;
@@ -480,24 +503,25 @@
   /* ============ VALUES ============ */
   .values {
     padding: 7rem 3rem;
-    background: var(--ink); color: var(--paper);
+    background: var(--values-bg);
+    color: var(--values-fg);
     display: grid; grid-template-columns: 1fr 2fr; gap: 5rem;
     position: relative; overflow: hidden;
     perspective: 1100px;
     perspective-origin: 50% 20%;
   }
-  .values .section-label { color: rgba(251,250,247,0.6); }
+  .values .section-label { color: var(--values-dim); }
   .values h2 {
     font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 4.5vw, 3.8rem);
     font-weight: 400; line-height: 1.05; letter-spacing: -0.015em;
     margin-bottom: 0; margin-top: 1.4rem;
   }
-  .values h2 em { color: #ff5a60; font-style: italic; }
+  .values h2 em { color: var(--values-accent); font-style: italic; }
   .values-grid {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem 2.5rem;
   }
   .value-item {
-    border-top: 1px solid rgba(251,250,247,0.18); padding-top: 1.4rem;
+    border-top: 1px solid var(--values-rule); padding-top: 1.4rem;
     transform: translateY(36px) rotateX(10deg);
     transform-origin: 50% 0%;
     opacity: 0.35;
@@ -513,7 +537,7 @@
   .values[data-io].is-inview .value-item:nth-child(4) { transition-delay: 0.26s; }
   .value-item .num {
     font-family: 'Outfit', sans-serif; font-size: 0.7rem;
-    letter-spacing: 0.22em; color: #ff5a60; display: block; margin-bottom: 0.8rem;
+    letter-spacing: 0.22em; color: var(--values-accent); display: block; margin-bottom: 0.8rem;
     font-weight: 500;
   }
   .value-item h3 {
@@ -521,7 +545,7 @@
     font-weight: 500; font-style: italic; margin-bottom: 0.8rem;
   }
   .value-item p {
-    font-size: 0.95rem; color: rgba(251,250,247,0.7); line-height: 1.65;
+    font-size: 0.95rem; color: var(--values-muted); line-height: 1.65;
     font-weight: 300;
   }
   .values-watermark {
@@ -712,6 +736,7 @@
     .footer-base { flex-direction: column; gap: 0.8rem; }
   }
 </style>
+<link rel="stylesheet" href="theme.css" />
 </head>
 <body>
 
@@ -735,6 +760,10 @@
     <div class="lang-switch" aria-label="Lingua">
       <button type="button" class="lang-btn" data-lang="it" aria-pressed="true">IT</button>
       <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <div class="theme-switch" role="group" aria-label="Tema">
+      <button type="button" class="lang-btn" data-theme="light" data-it="Chiaro" data-en="Light" aria-pressed="true">Chiaro</button>
+      <button type="button" class="lang-btn" data-theme="dark" data-it="Scuro" data-en="Dark" aria-pressed="false">Scuro</button>
     </div>
   </div>
 </header>
@@ -878,7 +907,7 @@
   <img class="values-watermark" src="assets/fenice-logo-white.png" alt="" />
   <div>
     <div class="section-label" style="display:flex; align-items:center; gap:0.7rem;">
-      <span style="display:inline-block; width:8px; height:8px; background: #ff5a60; border-radius:50%;"></span>
+      <span style="display:inline-block; width:8px; height:8px; background: var(--values-accent); border-radius:50%;"></span>
       <span data-it="Il nostro DNA" data-en="Our DNA">Il nostro DNA</span>
     </div>
     <h2 data-it-html="Un approccio &lt;em&gt;diverso&lt;/em&gt; al real estate." data-en-html="A &lt;em&gt;different&lt;/em&gt; approach to real estate.">Un approccio <em>diverso</em> al real estate.</h2>

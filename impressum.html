@@ -2,6 +2,15 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <script>
+  (function () {
+    try {
+      if (localStorage.getItem("fenice-theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    } catch (e) {}
+  })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-it="Impressum — Fenice Holding SA" data-en="Imprint — Fenice Holding SA">Impressum — Fenice Holding SA</title>
   <meta name="robots" content="index,follow" />
@@ -21,6 +30,10 @@
       <div class="lang-switch" aria-label="Language">
         <button type="button" class="lang-btn" data-lang="it" aria-pressed="true">IT</button>
         <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <div class="theme-switch" role="group" aria-label="Tema">
+        <button type="button" class="lang-btn" data-theme="light" data-it="Chiaro" data-en="Light" aria-pressed="true">Chiaro</button>
+        <button type="button" class="lang-btn" data-theme="dark" data-it="Scuro" data-en="Dark" aria-pressed="false">Scuro</button>
       </div>
     </div>
   </header>

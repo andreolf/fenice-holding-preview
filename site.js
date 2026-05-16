@@ -2,6 +2,50 @@
   "use strict";
 
   var STORAGE_KEY = "fenice-lang";
+  var THEME_KEY = "fenice-theme";
+
+  function getTheme() {
+    try {
+      return localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "light";
+    } catch (e) {
+      return "light";
+    }
+  }
+
+  function applyTheme(mode) {
+    var dark = mode === "dark";
+    if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    else document.documentElement.removeAttribute("data-theme");
+    syncThemeButtons();
+  }
+
+  function setTheme(mode) {
+    var next = mode === "dark" ? "dark" : "light";
+    try {
+      localStorage.setItem(THEME_KEY, next);
+    } catch (e) {}
+    applyTheme(next);
+  }
+
+  function syncThemeButtons() {
+    var t = getTheme();
+    document.querySelectorAll("button[data-theme]").forEach(function (btn) {
+      var is = btn.getAttribute("data-theme") === t;
+      btn.setAttribute("aria-pressed", is ? "true" : "false");
+    });
+  }
+
+  function bindThemeButtons() {
+    document.querySelectorAll("button[data-theme]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setTheme(btn.getAttribute("data-theme"));
+      });
+    });
+  }
+
+  function initTheme() {
+    applyTheme(getTheme());
+  }
 
   function getLang() {
     var l = localStorage.getItem(STORAGE_KEY);
@@ -206,10 +250,12 @@
   }
 
   function init() {
+    initTheme();
     document.documentElement.lang = getLang();
     applyI18nStrings();
     syncLangButtons();
     bindLangButtons();
+    bindThemeButtons();
     applyTitle();
     initScrollIO();
     initScrollParallax();

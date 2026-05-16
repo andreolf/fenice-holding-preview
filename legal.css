@@ -1,3 +1,5 @@
+@import "theme.css";
+
 :root {
   --paper: #fbfaf7;
   --paper-warm: #f4f0e8;
@@ -6,6 +8,7 @@
   --ink-mute: #8a8580;
   --red: #da3233;
   --rule: #e8e3dc;
+  --topbar-bg: rgba(251, 250, 247, 0.94);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,7 +35,7 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
   padding: 1rem 1.5rem;
-  background: rgba(251, 250, 247, 0.94);
+  background: var(--topbar-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--rule);
 }
@@ -75,7 +78,8 @@ body {
   color: var(--red);
 }
 
-.lang-switch { display: inline-flex; gap: 0.3rem; }
+.lang-switch,
+.theme-switch { display: inline-flex; gap: 0.3rem; }
 
 .lang-btn {
   border: 1px solid var(--rule);
