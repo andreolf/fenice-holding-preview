@@ -166,13 +166,8 @@
       prog = Math.max(0, Math.min(1, prog));
       var drift = (prog - 0.28) * 140;
       if (heroMedia) {
-        var mediaTilt = (1 - openEase) * -9;
         heroMedia.style.transform =
-          "translate3d(0," +
-          drift.toFixed(1) +
-          "px,0) rotateX(" +
-          mediaTilt.toFixed(2) +
-          "deg) scale(1.12)";
+          "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.12)";
       }
 
       var r = heroFig.getBoundingClientRect();
