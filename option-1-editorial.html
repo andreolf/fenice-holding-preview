@@ -160,8 +160,8 @@
 
   /* ============ HERO ============ */
   .hero {
-    min-height: 115vh;
-    padding: 9rem 3rem 4rem;
+    min-height: 100vh;
+    padding: 9rem 3rem 5rem;
     display: grid;
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     gap: 5rem;
@@ -228,7 +228,11 @@
     min-width: 0;
     width: 100%;
     max-width: 100%;
+    max-height: min(72vh, 680px);
     align-self: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
   }
   .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
   .scroll-hint {
@@ -281,10 +285,10 @@
     aspect-ratio: 3/4;
     width: 100%;
     max-width: 100%;
+    max-height: min(72vh, 680px);
     min-width: 0;
-    /* overflow:hidden clips 3D — kills the “opening” card effect */
-    overflow: visible;
-    margin: -2vh 0;
+    overflow: hidden;
+    margin: 0;
     box-shadow:
       0 28px 56px -24px rgba(14,14,14,0.22),
       0 0 0 1px rgba(14,14,14,0.06);
@@ -293,14 +297,10 @@
     transform-origin: 50% 88%;
     transition: box-shadow 0.45s ease;
     backface-visibility: hidden;
-    z-index: 0;
   }
   .hero-figure__media {
     position: absolute;
-    left: -10%;
-    right: -10%;
-    top: -14%;
-    bottom: -14%;
+    inset: 0;
     background: url(assets/hero-lugano-funicular.png) center 38% / cover no-repeat;
     transform-origin: 50% 45%;
     will-change: transform;
@@ -308,15 +308,12 @@
   }
   .hero-figure__veil {
     position: absolute;
-    left: -10%;
-    right: -10%;
-    top: -14%;
-    bottom: -14%;
+    inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(14,14,14,0.42) 0%,
-      rgba(14,14,14,0.12) 38%,
-      rgba(14,14,14,0.55) 100%
+      rgba(14,14,14,0.28) 0%,
+      rgba(14,14,14,0.05) 42%,
+      rgba(14,14,14,0.72) 100%
     );
     pointer-events: none;
     z-index: 1;
@@ -324,10 +321,7 @@
   .hero-figure::before {
     content: '';
     position: absolute;
-    left: -10%;
-    right: -10%;
-    top: -14%;
-    bottom: -14%;
+    inset: 0;
     background-image:
       repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 3px);
     z-index: 2;
@@ -336,21 +330,47 @@
   /* No logo on photo — fenice-logo-white.png has opaque black box; brand is in the header */
   .hero-figure-mark { display: none; }
   .hero-figure-caption {
-    position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
-    display: flex; justify-content: space-between; align-items: end;
-    color: rgba(255,255,255,0.92); font-family: 'Outfit', sans-serif;
-    font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
-    font-weight: 400;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.25rem;
+    padding: 2.75rem 1.35rem 1.25rem;
+    color: rgba(255,255,255,0.95);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 400;
+    line-height: 1.55;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(14,14,14,0.45) 42%,
+      rgba(14,14,14,0.82) 100%
+    );
+    pointer-events: none;
   }
+  .hero-figure-caption__label { margin: 0; }
   .hero-figure-caption .num {
-    font-family: 'Cormorant Garamond', serif; font-size: 2.4rem;
-    font-style: italic; color: var(--red); line-height: 1;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 2.4rem);
+    font-style: italic;
+    color: var(--red);
+    line-height: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+    margin-bottom: 0.1rem;
   }
 
   /* ============ STRIP ============ */
   .strip {
+    position: relative;
+    z-index: 2;
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
     padding: 1.2rem 0;
@@ -738,8 +758,19 @@
     .brand-lockup__title { font-size: 0.88rem; letter-spacing: 0.16em; }
     nav ul { gap: 1.2rem; flex-wrap: wrap; }
     nav a { font-size: 0.65rem; letter-spacing: 0.12em; }
-    .hero { grid-template-columns: minmax(0, 1fr); padding: 7rem 1.5rem 3rem; gap: 2rem; }
-    .hero-figure-wrap { justify-self: stretch; }
+    .hero { min-height: 0; grid-template-columns: minmax(0, 1fr); padding: 7rem 1.5rem 2rem; gap: 2rem; }
+    .hero-figure-wrap {
+      justify-self: stretch;
+      max-height: min(50vh, 420px);
+    }
+    .hero-figure {
+      aspect-ratio: 4/5;
+      max-height: min(50vh, 420px);
+    }
+    .hero-figure-caption {
+      padding: 2rem 1.1rem 1rem;
+      font-size: 0.62rem;
+    }
     .hero-meta { display: none; }
     .intro, .values, .cta { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
     .companies-header { padding: 0 1.5rem 3rem; flex-direction: column; gap: 1rem; align-items: start; }
@@ -816,8 +847,8 @@
       <div class="hero-figure__veil" aria-hidden="true"></div>
       <img class="hero-figure-mark" src="assets/fenice-logo-white.png" alt="" />
       <div class="hero-figure-caption">
-        <div data-it-html="Sede istituzionale&lt;br&gt;Lugano · Corso Elvezia 27" data-en-html="Registered office&lt;br&gt;Lugano · Corso Elvezia 27">Sede istituzionale<br>Lugano · Corso Elvezia 27</div>
-        <div class="num">'26</div>
+        <p class="hero-figure-caption__label" data-it-html="Sede istituzionale&lt;br&gt;Lugano · Corso Elvezia 27" data-en-html="Registered office&lt;br&gt;Lugano · Corso Elvezia 27">Sede istituzionale<br>Lugano · Corso Elvezia 27</p>
+        <span class="num" aria-hidden="true">'26</span>
       </div>
     </div>
   </div>

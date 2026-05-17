@@ -167,7 +167,7 @@
       var drift = (prog - 0.28) * 140;
       if (heroMedia) {
         heroMedia.style.transform =
-          "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.12)";
+          "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.05)";
       }
 
       var r = heroFig.getBoundingClientRect();
