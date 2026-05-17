@@ -244,6 +244,26 @@
     tick();
   }
 
+  function applySiteConfig() {
+    var media = document.querySelector(".hero-figure__media");
+    if (!media || !("fetch" in window)) return;
+
+    fetch("content/site.json")
+      .then(function (r) {
+        return r.ok ? r.json() : null;
+      })
+      .then(function (cfg) {
+        if (!cfg) return;
+        if (cfg.heroImage) {
+          media.style.backgroundImage = "url(" + cfg.heroImage + ")";
+        }
+        if (cfg.heroImagePosition) {
+          media.style.backgroundPosition = cfg.heroImagePosition;
+        }
+      })
+      .catch(function () {});
+  }
+
   function init() {
     initTheme();
     document.documentElement.lang = getLang();
@@ -252,6 +272,7 @@
     bindLangButtons();
     bindThemeButtons();
     applyTitle();
+    applySiteConfig();
     initScrollIO();
     initScrollParallax();
   }

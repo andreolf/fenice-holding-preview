@@ -40,7 +40,10 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    max-width: 100%;
+  }
   body {
     font-family: 'Outfit', sans-serif;
     background: var(--paper);
@@ -160,14 +163,13 @@
     min-height: 115vh;
     padding: 9rem 3rem 4rem;
     display: grid;
-    grid-template-columns: 1.25fr 1fr;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     gap: 5rem;
     align-items: center;
     position: relative;
+    min-width: 0;
     perspective: 2000px;
     perspective-origin: 58% 22%;
-    overflow-x: visible;
-    isolation: isolate;
   }
   /* Hero must NOT use translateY from generic [data-io] — it kills descendant 3D under perspective */
   .hero[data-io]:not(.is-inview) {
@@ -204,6 +206,8 @@
     font-size: clamp(3rem, 7vw, 6.6rem);
     line-height: 0.98; font-weight: 400; letter-spacing: -0.02em;
     color: var(--ink); margin-bottom: 2.2rem;
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
   h1.display em {
     font-style: italic; color: var(--red); font-weight: 400;
@@ -215,7 +219,16 @@
   .hero-copy {
     position: relative;
     z-index: 2;
-    will-change: transform;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+  /* Grid-sized box: 3D transforms on .hero-figure must not inflate track min-width */
+  .hero-figure-wrap {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    align-self: center;
   }
   .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
   .scroll-hint {
@@ -266,6 +279,9 @@
   .hero-figure {
     position: relative;
     aspect-ratio: 3/4;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     /* overflow:hidden clips 3D — kills the “opening” card effect */
     overflow: visible;
     margin: -2vh 0;
@@ -285,7 +301,7 @@
     right: -10%;
     top: -14%;
     bottom: -14%;
-    background: url(assets/hero-lugano-gate.png) center / cover no-repeat;
+    background: url(assets/hero-lugano-funicular.png) center 38% / cover no-repeat;
     transform-origin: 50% 45%;
     will-change: transform;
     z-index: 0;
@@ -296,7 +312,12 @@
     right: -10%;
     top: -14%;
     bottom: -14%;
-    background: linear-gradient(180deg, rgba(14,14,14,0.15) 0%, rgba(14,14,14,0.55) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(14,14,14,0.42) 0%,
+      rgba(14,14,14,0.12) 38%,
+      rgba(14,14,14,0.55) 100%
+    );
     pointer-events: none;
     z-index: 1;
   }
@@ -312,13 +333,8 @@
     z-index: 2;
     pointer-events: none;
   }
-  .hero-figure-mark {
-    position: absolute; top: 1.5rem; left: 1.5rem;
-    height: 48px; width: auto;
-    display: block;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
-    z-index: 3;
-  }
+  /* No logo on photo — fenice-logo-white.png has opaque black box; brand is in the header */
+  .hero-figure-mark { display: none; }
   .hero-figure-caption {
     position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
     display: flex; justify-content: space-between; align-items: end;
@@ -565,10 +581,6 @@
   /* Scroll-linked motion (Chrome / Safari recenti) — effetto “scroll storytelling” */
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
-      @keyframes fenice-hero-copy-path {
-        from { transform: translateY(2.25rem); }
-        to { transform: translateY(-2.75rem); }
-      }
       @keyframes fenice-intro-shift {
         from { transform: translateY(1.5rem); opacity: 0.92; }
         to { transform: translateY(-1.25rem); opacity: 1; }
@@ -576,11 +588,6 @@
       @keyframes fenice-wm-drift {
         from { transform: translate(4%, 6%) rotate(-3deg) scale(1); }
         to { transform: translate(-6%, -4%) rotate(4deg) scale(1.05); }
-      }
-      .hero-copy {
-        animation: fenice-hero-copy-path linear both;
-        animation-timeline: view();
-        animation-range: entry 0% exit 30%;
       }
       .intro > div:last-child {
         animation: fenice-intro-shift linear both;
@@ -731,7 +738,8 @@
     .brand-lockup__title { font-size: 0.88rem; letter-spacing: 0.16em; }
     nav ul { gap: 1.2rem; flex-wrap: wrap; }
     nav a { font-size: 0.65rem; letter-spacing: 0.12em; }
-    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2rem; }
+    .hero { grid-template-columns: minmax(0, 1fr); padding: 7rem 1.5rem 3rem; gap: 2rem; }
+    .hero-figure-wrap { justify-self: stretch; }
     .hero-meta { display: none; }
     .intro, .values, .cta { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
     .companies-header { padding: 0 1.5rem 3rem; flex-direction: column; gap: 1rem; align-items: start; }
@@ -802,13 +810,15 @@
       <span class="scroll-hint__line" aria-hidden="true"></span>
     </a>
   </div>
-  <div class="hero-figure" role="img" aria-label="Lago di Lugano, cancello — foto Ryan Klaus / Unsplash">
-    <div class="hero-figure__media" aria-hidden="true"></div>
-    <div class="hero-figure__veil" aria-hidden="true"></div>
-    <img class="hero-figure-mark" src="assets/fenice-logo-white.png" alt="" />
-    <div class="hero-figure-caption">
-      <div data-it-html="Sede istituzionale&lt;br&gt;Lugano · Corso Elvezia 27" data-en-html="Registered office&lt;br&gt;Lugano · Corso Elvezia 27">Sede istituzionale<br>Lugano · Corso Elvezia 27</div>
-      <div class="num">'26</div>
+  <div class="hero-figure-wrap">
+    <div class="hero-figure" role="img" aria-label="Lugano, funicolare e lago">
+      <div class="hero-figure__media" aria-hidden="true"></div>
+      <div class="hero-figure__veil" aria-hidden="true"></div>
+      <img class="hero-figure-mark" src="assets/fenice-logo-white.png" alt="" />
+      <div class="hero-figure-caption">
+        <div data-it-html="Sede istituzionale&lt;br&gt;Lugano · Corso Elvezia 27" data-en-html="Registered office&lt;br&gt;Lugano · Corso Elvezia 27">Sede istituzionale<br>Lugano · Corso Elvezia 27</div>
+        <div class="num">'26</div>
+      </div>
     </div>
   </div>
 </section>
