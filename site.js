@@ -157,15 +157,6 @@
       var drift = (prog - 0.35) * 48;
       heroMedia.style.transform =
         "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.04)";
-
-      var hint = document.querySelector(".js-scroll-hint");
-      if (hint) {
-        var scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-        var openEase = Math.min(1, scrollY / (vh * 0.28));
-        var hOp = 1 - openEase;
-        hint.style.opacity = hOp < 0.08 ? "0" : String(Math.max(0.2, hOp));
-        hint.style.pointerEvents = hOp < 0.12 ? "none" : "";
-      }
     }
 
     function tick() {

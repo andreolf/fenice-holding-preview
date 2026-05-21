@@ -189,13 +189,15 @@
   .hero-cover__veil {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      105deg,
-      rgba(14,14,14,0.62) 0%,
-      rgba(14,14,14,0.35) 38%,
-      rgba(14,14,14,0.08) 62%,
-      transparent 100%
-    );
+    background:
+      linear-gradient(
+        105deg,
+        rgba(14,14,14,0.82) 0%,
+        rgba(14,14,14,0.58) 32%,
+        rgba(14,14,14,0.28) 55%,
+        rgba(14,14,14,0.12) 100%
+      ),
+      rgba(14,14,14,0.18);
     z-index: 1;
     pointer-events: none;
   }
@@ -208,15 +210,23 @@
     padding: 7.5rem 3rem 3rem;
     box-sizing: border-box;
   }
-  .hero-logo {
-    display: block;
-    height: 56px;
-    width: auto;
-    margin-bottom: 1.75rem;
-    padding: 0.65rem 0.85rem;
-    background: rgba(251, 250, 247, 0.94);
-    border-radius: 2px;
-    box-shadow: 0 8px 28px rgba(14, 14, 14, 0.18);
+  .hero-brand {
+    margin-bottom: 1.5rem;
+  }
+  .hero-brand__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1.15;
+    color: #fbfaf7;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+  }
+  .hero-brand__title em {
+    font-style: italic;
+    color: #ff6b6e;
+    letter-spacing: 0.12em;
   }
   .eyebrow {
     font-family: 'Outfit', sans-serif; font-size: 0.72rem;
@@ -254,35 +264,6 @@
   .hero .eyebrow { color: #ff8a8c; }
   .hero .eyebrow::before { background: var(--red); }
   .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
-  .scroll-hint {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.65rem;
-    margin-top: 2.25rem;
-    text-decoration: none;
-    color: rgba(251, 250, 247, 0.75);
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    font-weight: 500;
-    transition: opacity 0.35s ease, color 0.25s ease;
-  }
-  .scroll-hint:hover { color: var(--red); }
-  .scroll-hint__line {
-    width: 1px;
-    height: 2.5rem;
-    background: linear-gradient(180deg, var(--red), transparent);
-    animation: scroll-hint-pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes scroll-hint-pulse {
-    0%, 100% { transform: scaleY(0.55); opacity: 0.45; }
-    50% { transform: scaleY(1); opacity: 1; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-hint__line { animation: none; opacity: 0.5; }
-  }
   .btn {
     padding: 1rem 1.8rem; border: 1px solid var(--ink);
     background: var(--ink); color: var(--paper);
@@ -702,7 +683,6 @@
     nav a { font-size: 0.65rem; letter-spacing: 0.12em; }
     .hero-cover { min-height: clamp(300px, 46vh, 440px); }
     .hero-cover__content { padding: 6.5rem 1.5rem 2rem; }
-    .hero-logo { height: 44px; margin-bottom: 1.25rem; }
     .hero h1.display { max-width: none; }
     .intro, .values, .cta { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
     .companies-header { padding: 0 1.5rem 3rem; flex-direction: column; gap: 1rem; align-items: start; }
@@ -751,7 +731,9 @@
     <div class="hero-cover__media" aria-hidden="true"></div>
     <div class="hero-cover__veil" aria-hidden="true"></div>
     <div class="hero-cover__content">
-      <img class="hero-logo" src="assets/fenice-logo.png" alt="Fenice Holding SA" width="160" height="56" />
+      <div class="hero-brand" aria-label="Fenice Holding SA">
+        <span class="hero-brand__title">Fenice <em>Holding</em> SA</span>
+      </div>
       <div class="hero-copy">
         <div class="eyebrow" data-it="Real Estate · Svizzera" data-en="Real Estate · Switzerland">Real Estate · Svizzera</div>
         <h1 class="display" data-it-html="Valore aggiunto&lt;br&gt;nel &lt;em&gt;real estate&lt;/em&gt;&lt;br&gt;svizzero." data-en-html="Added value&lt;br&gt;in &lt;em&gt;Swiss&lt;/em&gt;&lt;br&gt;real estate.">Valore aggiunto<br>nel <em>real estate</em><br>svizzero.</h1>
@@ -770,10 +752,6 @@
             </svg>
           </a>
         </div>
-        <a href="#gruppo" class="scroll-hint js-scroll-hint" aria-label="Scorri verso il gruppo">
-          <span data-it="Scorri" data-en="Scroll">Scorri</span>
-          <span class="scroll-hint__line" aria-hidden="true"></span>
-        </a>
       </div>
     </div>
   </div>
