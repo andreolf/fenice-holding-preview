@@ -179,12 +179,22 @@
     display: flex;
     align-items: flex-end;
     overflow: hidden;
+    perspective: 1600px;
+    perspective-origin: 52% 42%;
+  }
+  .hero-cover__stage {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transform-origin: 50% 50%;
+    will-change: transform;
   }
   .hero-cover__media {
     position: absolute;
     inset: 0;
     background: url(assets/hero-bernina-train.png) center center / cover no-repeat;
     z-index: 0;
+    transform: translateZ(0);
   }
   .hero-cover__veil {
     position: absolute;
@@ -209,6 +219,8 @@
     margin: 0 auto;
     padding: 7.5rem 3rem 3rem;
     box-sizing: border-box;
+    transform-style: preserve-3d;
+    will-change: transform;
   }
   .hero-brand {
     margin-bottom: 1.5rem;
@@ -427,7 +439,7 @@
   }
   .company[data-io].is-inview {
     opacity: 1;
-    transform: rotateX(0deg) translateY(0) translateZ(0) scale(1);
+    transform: rotateX(var(--fenice-tilt-x, 0deg)) translateY(0) translateZ(0) scale(1);
     box-shadow: 0 36px 70px -30px rgba(14,14,14,0.14);
     transition:
       opacity 0.75s ease,
@@ -437,14 +449,24 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .company[data-io]:not(.is-inview),
-    .company[data-io].is-inview {
+    .company[data-io].is-inview,
+    .company:hover {
       opacity: 1 !important;
       transform: none !important;
       box-shadow: none !important;
       transition: none !important;
     }
+    .values[data-io].is-inview .value-item:hover,
+    .leader-card:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
   }
-  .company:hover { background: var(--paper-warm); }
+  .company:hover {
+    background: var(--paper-warm);
+    transform: rotateX(var(--fenice-tilt-x, 0deg)) translateY(-4px) translateZ(12px) scale(1.01);
+    box-shadow: 0 42px 80px -28px rgba(14,14,14,0.18);
+  }
   .company:hover .company-num { color: var(--red); transform: translateX(4px); }
 
   .company-num {
@@ -502,12 +524,26 @@
     border-top: 1px solid var(--values-rule); padding-top: 1.4rem;
     transform: translateY(36px) rotateX(10deg);
     transform-origin: 50% 0%;
+    transform-style: preserve-3d;
     opacity: 0.35;
-    transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.75s ease;
+    transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.75s ease, box-shadow 0.4s ease;
   }
   .values[data-io].is-inview .value-item {
-    transform: translateY(0) rotateX(0deg);
+    transform: translateY(0) rotateX(0deg) translateZ(0);
     opacity: 1;
+  }
+  .values[data-io].is-inview .value-item:hover {
+    transform: translateY(-6px) rotateX(-6deg) rotateY(3deg) translateZ(18px);
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.45);
+  }
+  .leader-card {
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+    border-radius: 2px;
+  }
+  .leader-card:hover {
+    transform: translateY(-4px) rotateX(-4deg) translateZ(10px);
+    box-shadow: 0 16px 32px -18px rgba(14, 14, 14, 0.12);
   }
   .values[data-io].is-inview .value-item:nth-child(1) { transition-delay: 0.05s; }
   .values[data-io].is-inview .value-item:nth-child(2) { transition-delay: 0.12s; }
@@ -746,10 +782,12 @@
 </header>
 
 <section class="hero" id="top" data-io>
-  <div class="hero-cover" role="img" aria-label="Treno rosso sul viadotto — Svizzera">
-    <div class="hero-cover__media" aria-hidden="true"></div>
-    <div class="hero-cover__veil" aria-hidden="true"></div>
-    <div class="hero-cover__content">
+  <div class="hero-cover js-hero-3d" role="img" aria-label="Treno rosso sul viadotto — Svizzera">
+    <div class="hero-cover__stage" aria-hidden="true">
+      <div class="hero-cover__media"></div>
+      <div class="hero-cover__veil"></div>
+    </div>
+    <div class="hero-cover__content js-hero-3d-content">
       <div class="hero-brand" aria-label="Fenice Holding SA">
         <span class="hero-brand__title">Fenice <em>Holding</em> SA</span>
       </div>
