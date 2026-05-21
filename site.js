@@ -137,78 +137,33 @@
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
-    var heroFig = document.querySelector(".hero-figure");
-    var heroMedia = document.querySelector(".hero-figure__media");
-    var hero = document.querySelector(".hero");
-    if (!heroFig || !hero) return;
+    var heroMedia = document.querySelector(".hero-cover__media");
+    var hero = document.querySelector(".hero-cover");
+    if (!heroMedia || !hero) return;
 
     var pending = false;
-    var mx = 0;
-    var my = 0;
 
     function apply() {
       pending = false;
       var vh = window.innerHeight || 1;
-      var vw = window.innerWidth || 1;
-      var rH = hero.getBoundingClientRect();
-      if (rH.bottom < -100 || rH.top > vh + 80) {
-        if (heroMedia) heroMedia.style.transform = "";
-        heroFig.style.transform = "";
+      var r = hero.getBoundingClientRect();
+      if (r.bottom < -80 || r.top > vh + 80) {
+        heroMedia.style.transform = "";
         return;
       }
-
-      var scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-      var openRaw = Math.min(1, scrollY / (vh * 0.36));
-      var openEase = openRaw * openRaw * (3 - 2 * openRaw);
-
-      var span = Math.max(vh + rH.height, 1);
-      var prog = (vh - rH.top) / span;
+      var span = Math.max(vh + r.height, 1);
+      var prog = (vh - r.top) / span;
       prog = Math.max(0, Math.min(1, prog));
-      var drift = (prog - 0.28) * 140;
-      if (heroMedia) {
-        heroMedia.style.transform =
-          "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.05)";
-      }
-
-      var r = heroFig.getBoundingClientRect();
-      if (r.bottom < -120 || r.top > vh + 120) {
-        heroFig.style.transform = "";
-        return;
-      }
-
-      var centerY = r.top + r.height * 0.42;
-      var t = (vh * 0.48 - centerY) / (vh * 0.72);
-      t = Math.max(-1, Math.min(1, t));
-
-      var openRx = (1 - openEase) * 16;
-      var openTz = (1 - openEase) * -34;
-      var openScale = 0.9 + openEase * 0.12;
-
-      var rx = openRx + t * 4 + my * 2.5;
-      var centerX = r.left + r.width / 2;
-      var u = (centerX - vw * 0.5) / (Math.max(vw, 1) * 0.55);
-      u = Math.max(-1, Math.min(1, u));
-      var ry = u * -5 + mx * 3;
-      var rz = (1 - openEase) * -2;
-      var sc = openScale * (1.01 + (1 - Math.abs(t)) * 0.03);
-
-      heroFig.style.transform =
-        "translateZ(" +
-        openTz.toFixed(1) +
-        "px) rotateX(" +
-        rx.toFixed(2) +
-        "deg) rotateY(" +
-        ry.toFixed(2) +
-        "deg) rotateZ(" +
-        rz.toFixed(2) +
-        "deg) scale(" +
-        sc.toFixed(3) +
-        ")";
+      var drift = (prog - 0.35) * 48;
+      heroMedia.style.transform =
+        "translate3d(0," + drift.toFixed(1) + "px,0) scale(1.04)";
 
       var hint = document.querySelector(".js-scroll-hint");
       if (hint) {
-        var hOp = 1 - Math.max(0, (openEase - 0.42) / 0.48);
-        hint.style.opacity = hOp < 0.08 ? "0" : String(Math.max(0.15, hOp));
+        var scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        var openEase = Math.min(1, scrollY / (vh * 0.28));
+        var hOp = 1 - openEase;
+        hint.style.opacity = hOp < 0.08 ? "0" : String(Math.max(0.2, hOp));
         hint.style.pointerEvents = hOp < 0.12 ? "none" : "";
       }
     }
@@ -220,32 +175,13 @@
       }
     }
 
-    hero.addEventListener(
-      "pointermove",
-      function (e) {
-        var rect = hero.getBoundingClientRect();
-        if (rect.width < 1 || rect.height < 1) return;
-        mx = (e.clientX - rect.left) / rect.width - 0.5;
-        my = (e.clientY - rect.top) / rect.height - 0.5;
-        mx = Math.max(-0.5, Math.min(0.5, mx)) * 2;
-        my = Math.max(-0.5, Math.min(0.5, my)) * 2;
-        tick();
-      },
-      { passive: true }
-    );
-    hero.addEventListener("pointerleave", function () {
-      mx = 0;
-      my = 0;
-      tick();
-    });
-
     window.addEventListener("scroll", tick, { passive: true });
     window.addEventListener("resize", tick, { passive: true });
     tick();
   }
 
   function applySiteConfig() {
-    var media = document.querySelector(".hero-figure__media");
+    var media = document.querySelector(".hero-cover__media");
     if (!media || !("fetch" in window)) return;
 
     fetch("content/site.json")
