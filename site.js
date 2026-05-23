@@ -137,70 +137,18 @@
     return Math.max(min, Math.min(max, n));
   }
 
-  function smoothstep(t) {
-    t = clamp(t, 0, 1);
-    return t * t * (3 - 2 * t);
-  }
-
   function initMotion3D() {
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
-    var hero = document.querySelector(".js-hero-3d");
-    var stage = document.querySelector(".hero-cover__stage");
-    var content = document.querySelector(".js-hero-3d-content");
     var companies = document.querySelectorAll(".company");
-    if (!hero || !stage) return;
+    if (!companies.length) return;
 
     var pending = false;
-    var mx = 0;
-    var my = 0;
 
     function apply() {
       pending = false;
       var vh = window.innerHeight || 1;
-      var vw = window.innerWidth || 1;
-      var scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-
-      var r = hero.getBoundingClientRect();
-      if (r.bottom < -100 || r.top > vh + 100) {
-        stage.style.transform = "";
-        if (content) content.style.transform = "";
-      } else {
-        var openRaw = Math.min(1, scrollY / (vh * 0.34));
-        var openEase = smoothstep(openRaw);
-        var span = Math.max(vh + r.height, 1);
-        var prog = (vh - r.top) / span;
-        prog = clamp(prog, 0, 1);
-        var drift = (prog - 0.32) * 56;
-
-        var openRx = (1 - openEase) * 8 + my * 2.8;
-        var openRy = mx * -4.5;
-        var openSc = 1.08 - openEase * 0.08;
-        var openTz = (1 - openEase) * -28;
-
-        stage.style.transform =
-          "translate3d(0," +
-          drift.toFixed(1) +
-          "px,0) translateZ(" +
-          openTz.toFixed(1) +
-          "px) rotateX(" +
-          openRx.toFixed(2) +
-          "deg) rotateY(" +
-          openRy.toFixed(2) +
-          "deg) scale(" +
-          openSc.toFixed(3) +
-          ")";
-
-        if (content) {
-          content.style.transform =
-            "translateZ(52px) rotateX(" +
-            (-openRx * 0.12).toFixed(2) +
-            "deg) rotateY(" +
-            (-openRy * 0.18).toFixed(2) +
-            "deg)";
-        }
-      }
 
       companies.forEach(function (card) {
         if (!card.classList.contains("is-inview")) {
@@ -226,25 +174,6 @@
         requestAnimationFrame(apply);
       }
     }
-
-    hero.addEventListener(
-      "pointermove",
-      function (e) {
-        var rect = hero.getBoundingClientRect();
-        if (rect.width < 1 || rect.height < 1) return;
-        mx = (e.clientX - rect.left) / rect.width - 0.5;
-        my = (e.clientY - rect.top) / rect.height - 0.5;
-        mx = clamp(mx, -0.5, 0.5) * 2;
-        my = clamp(my, -0.5, 0.5) * 2;
-        tick();
-      },
-      { passive: true }
-    );
-    hero.addEventListener("pointerleave", function () {
-      mx = 0;
-      my = 0;
-      tick();
-    });
 
     window.addEventListener("scroll", tick, { passive: true });
     window.addEventListener("resize", tick, { passive: true });

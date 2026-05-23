@@ -54,6 +54,14 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+  p,
+  .company-body,
+  .hero-lede,
+  .value-item p,
+  .footer-brand-block .info p {
+    text-align: justify;
+    text-wrap: pretty;
+  }
 
   /* ============ TOP BAR ============ */
   .topbar {
@@ -179,15 +187,10 @@
     display: flex;
     align-items: flex-end;
     overflow: hidden;
-    perspective: 1600px;
-    perspective-origin: 52% 42%;
   }
   .hero-cover__stage {
     position: absolute;
     inset: 0;
-    transform-style: preserve-3d;
-    transform-origin: 50% 50%;
-    will-change: transform;
   }
   .hero-cover__media {
     position: absolute;
@@ -219,8 +222,6 @@
     margin: 0 auto;
     padding: 7.5rem 3rem 3rem;
     box-sizing: border-box;
-    transform-style: preserve-3d;
-    will-change: transform;
   }
   .hero-brand {
     margin-bottom: 1.5rem;
@@ -340,10 +341,18 @@
     max-width: 1500px;
     margin: 0 auto;
   }
-  .intro > .section-label {
-    align-self: start;
-    padding-top: 0.42rem;
-    line-height: 1.4;
+  .intro-mark {
+    width: min(100%, 10.5rem);
+    height: 4.75rem;
+    background-color: var(--red);
+    mask-image: url(assets/fenice-logo.png);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: left top;
+    -webkit-mask-image: url(assets/fenice-logo.png);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: left top;
   }
   .section-label {
     font-family: 'Outfit', sans-serif; font-size: 0.7rem;
@@ -419,7 +428,9 @@
   .company {
     border-bottom: 1px solid var(--rule);
     padding: 4.5rem 3rem;
-    display: grid; grid-template-columns: 80px 1fr 1.5fr 1fr; gap: 3rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 3rem;
     align-items: start;
     position: relative;
     overflow: hidden;
@@ -469,11 +480,7 @@
   }
   .company:hover .company-num { color: var(--red); transform: translateX(4px); }
 
-  .company-num {
-    font-family: 'Cormorant Garamond', serif; font-size: 3rem;
-    font-style: italic; color: var(--ink-mute); line-height: 1;
-    transition: all .5s ease; font-weight: 500;
-  }
+  .company-num { display: none; }
   .company-name {
     font-family: 'Cormorant Garamond', serif; font-size: 2.1rem;
     font-weight: 500; letter-spacing: -0.005em; line-height: 1.1;
@@ -549,11 +556,7 @@
   .values[data-io].is-inview .value-item:nth-child(2) { transition-delay: 0.12s; }
   .values[data-io].is-inview .value-item:nth-child(3) { transition-delay: 0.19s; }
   .values[data-io].is-inview .value-item:nth-child(4) { transition-delay: 0.26s; }
-  .value-item .num {
-    font-family: 'Outfit', sans-serif; font-size: 0.7rem;
-    letter-spacing: 0.22em; color: var(--values-accent); display: block; margin-bottom: 0.8rem;
-    font-weight: 500;
-  }
+  .value-item .num { display: none; }
   .value-item h3 {
     font-family: 'Cormorant Garamond', serif; font-size: 1.7rem;
     font-weight: 500; font-style: italic; margin-bottom: 0.8rem;
@@ -736,7 +739,7 @@
       padding: 3rem 1.5rem;
       gap: 1rem;
     }
-    .intro > .section-label { padding-top: 0; }
+    .intro-mark { height: 3.5rem; width: 8rem; }
     .intro h2 { margin-bottom: 1.25rem; }
     .intro, .values, .cta { grid-template-columns: 1fr; }
     .values, .cta { padding: 4rem 1.5rem; gap: 2rem; }
@@ -782,33 +785,14 @@
 </header>
 
 <section class="hero" id="top" data-io>
-  <div class="hero-cover js-hero-3d" role="img" aria-label="Treno rosso sul viadotto — Svizzera">
+  <div class="hero-cover" role="img" aria-label="Treno rosso sul viadotto — Svizzera">
     <div class="hero-cover__stage" aria-hidden="true">
       <div class="hero-cover__media"></div>
       <div class="hero-cover__veil"></div>
     </div>
-    <div class="hero-cover__content js-hero-3d-content">
+    <div class="hero-cover__content">
       <div class="hero-brand" aria-label="Fenice Holding SA">
         <span class="hero-brand__title">Fenice <em>Holding</em> SA</span>
-      </div>
-      <div class="hero-copy">
-        <div class="eyebrow" data-it="Real Estate · Svizzera" data-en="Real Estate · Switzerland">Real Estate · Svizzera</div>
-        <h1 class="display" data-it-html="Valore aggiunto&lt;br&gt;nel &lt;em&gt;real estate&lt;/em&gt;&lt;br&gt;svizzero." data-en-html="Added value&lt;br&gt;in &lt;em&gt;Swiss&lt;/em&gt;&lt;br&gt;real estate.">Valore aggiunto<br>nel <em>real estate</em><br>svizzero.</h1>
-        <p class="hero-lede"
-          data-it="Gruppo d&#39;investimento attivo sul territorio svizzero. Valorizziamo il patrimonio immobiliare attraverso l&#39;ingegneria finanziaria del board e una gestione imprenditoriale diretta."
-          data-en="An investment group active across Switzerland. We enhance real estate value through board-level financial engineering and hands-on entrepreneurial management."
-        >
-          Gruppo d'investimento attivo sul territorio svizzero. Valorizziamo il patrimonio immobiliare
-          attraverso l'ingegneria finanziaria del board e una gestione imprenditoriale diretta.
-        </p>
-        <div class="hero-actions">
-          <a href="#gruppo" class="btn" data-it="Scopri il Gruppo" data-en="Discover the Group">
-            Scopri il Gruppo
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-              <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -824,16 +808,14 @@
 </div>
 
 <section class="intro" id="gruppo" data-io>
-  <div class="section-label"><span class="dot"></span><span data-it="Il Gruppo" data-en="The Group">Il Gruppo</span></div>
+  <div class="intro-mark" role="img" aria-label="Fenice"></div>
   <div>
-    <h2 data-it-html="Società del gruppo, &lt;em&gt;soluzioni integrate.&lt;/em&gt;" data-en-html="Group companies, &lt;em&gt;integrated solutions.&lt;/em&gt;">Società del gruppo, <em>soluzioni integrate.</em></h2>
-    <p data-it="Fenice Holding SA coordina un gruppo d&#39;investimento attivo sul territorio svizzero, con valore aggiunto generato dall&#39;ingegneria finanziaria applicata dal board e da una gestione imprenditoriale diretta del patrimonio immobiliare." data-en="Fenice Holding SA coordinates an investment group active across Switzerland, creating added value through board-level financial engineering and direct entrepreneurial management of real estate assets.">
-      Fenice Holding SA coordina un gruppo d'investimento attivo sul territorio svizzero, con valore aggiunto
-      generato dall'ingegneria finanziaria applicata dal board e da una gestione imprenditoriale diretta del patrimonio immobiliare.
+    <h2 data-it-html="Società del gruppo, &lt;em&gt;soluzioni integrate&lt;/em&gt;" data-en-html="Group companies, &lt;em&gt;integrated solutions&lt;/em&gt;">Società del gruppo, <em>soluzioni integrate</em></h2>
+    <p data-it="Fenice Holding SA coordina un gruppo d&#39;investimento attivo sul territorio svizzero, con focus sulla valorizzazione del patrimonio immobiliare attraverso gestione imprenditoriale diretta e strutturazione finanziaria strategica delle operazioni." data-en="Fenice Holding SA coordinates an investment group active across Switzerland, focused on enhancing real estate assets through direct entrepreneurial management and strategic financial structuring of operations.">
+      Fenice Holding SA coordina un gruppo d'investimento attivo sul territorio svizzero, con focus sulla valorizzazione del patrimonio immobiliare attraverso gestione imprenditoriale diretta e strutturazione finanziaria strategica delle operazioni.
     </p>
-    <p data-it="Uniamo competenze finanziarie, tecniche e di asset management per rendimenti resilienti a medio-lungo termine, con approccio sostenibile e trasparente." data-en="We combine financial, technical and asset management expertise for resilient medium- to long-term returns, with a sustainable and transparent approach.">
-      Uniamo competenze finanziarie, tecniche e di asset management per rendimenti resilienti
-      a medio-lungo termine, con approccio sostenibile e trasparente.
+    <p data-it="L&#39;approccio del gruppo integra competenze finanziarie, tecniche e di asset management con l&#39;obiettivo di creare valore sostenibile e rendimenti resilienti nel medio-lungo termine." data-en="The group's approach combines financial, technical and asset management expertise to create sustainable value and resilient medium- to long-term returns.">
+      L'approccio del gruppo integra competenze finanziarie, tecniche e di asset management con l'obiettivo di creare valore sostenibile e rendimenti resilienti nel medio-lungo termine.
     </p>
     <div class="leadership">
       <div class="leader-card">
@@ -855,9 +837,8 @@
   </div>
 
   <article class="company" id="fenice-re" data-io>
-    <div class="company-num">01</div>
     <div>
-      <div class="company-name">Fenice Real Estate Assets SA <span>Asset & Property Management</span></div>
+      <div class="company-name">Fenice Real Estate Assets <span>Asset & Property Management</span></div>
     </div>
     <p class="company-body" data-it="Detenzione, valorizzazione e gestione del parco immobiliare del Gruppo Fenice. La società si occupa dell&#39;acquisizione ed ottimizzazione di asset immobiliari a reddito sul territorio svizzero, con particolare focus su operazioni di repositioning e incremento della redditività. L&#39;approccio del gruppo si basa su una gestione imprenditoriale diretta degli immobili, orientata all&#39;efficienza operativa, alla crescita del cash flow ed alla creazione di valore nel medio-lungo termine." data-en="Ownership, enhancement and management of the Fenice Group real estate portfolio. The company acquires and optimises income-producing assets in Switzerland, with a focus on repositioning and yield improvement. The group&#39;s approach is based on direct entrepreneurial property management, targeting operational efficiency, cash flow growth and medium- to long-term value creation.">
       Detenzione, valorizzazione e gestione del parco immobiliare del Gruppo Fenice. La società si occupa
@@ -875,9 +856,8 @@
   </article>
 
   <article class="company" id="blue-lake" data-io data-io-delay="50">
-    <div class="company-num">02</div>
     <div>
-      <div class="company-name">Blue Lake Capital <span>Investment & Partecipazioni</span></div>
+      <div class="company-name">Blue Lake Capital <span data-it="Financial Advisory" data-en="Financial Advisory">Financial Advisory</span></div>
     </div>
     <p class="company-body" data-it="Società operativa del Gruppo Fenice dedicata ai servizi finanziari, all&#39;analisi strategica ed all&#39;ottimizzazione degli investimenti nel settore real estate svizzero. Supporta principalmente le attività immobiliari e finanziarie del Gruppo Fenice, con strutturazione operativa, analisi finanziaria, sviluppo strategico e ottimizzazione delle operazioni immobiliari. Segue anche una selezionata base di clienti storici esterni al gruppo. L&#39;approccio si fonda su analisi approfondite, visione imprenditoriale e gestione attiva, con focus su efficienza, sostenibilità finanziaria e creazione di valore nel medio-lungo termine." data-en="An operating company of the Fenice Group focused on financial services, strategic analysis and optimisation of investments in Swiss real estate. It primarily supports the Group&#39;s real estate and financial activities through operational structuring, financial analysis, strategic development and transaction optimisation, while also serving a select base of longstanding external clients. The approach is grounded in rigorous analysis, entrepreneurial vision and active management, with a focus on efficiency, financial sustainability and medium- to long-term value creation.">
       Società operativa del Gruppo Fenice dedicata ai servizi finanziari, all'analisi strategica ed
@@ -896,7 +876,6 @@
   </article>
 
   <article class="company" id="madi" data-io data-io-delay="100">
-    <div class="company-num">03</div>
     <div>
       <div class="company-name">M.A.DI. <span>Modular & Deployable Housing</span></div>
     </div>
@@ -926,22 +905,18 @@
   </div>
   <div class="values-grid">
     <div class="value-item">
-      <span class="num">01</span>
       <h3 data-it="Rigore" data-en="Rigour">Rigore</h3>
       <p data-it="Analisi finanziaria, due diligence tecnica e governance trasparente come fondamenta di ogni operazione." data-en="Financial analysis, technical due diligence and transparent governance as the foundation of every mandate.">Analisi finanziaria, due diligence tecnica e governance trasparente come fondamenta di ogni operazione.</p>
     </div>
     <div class="value-item">
-      <span class="num">02</span>
       <h3 data-it="Innovazione" data-en="Innovation">Innovazione</h3>
       <p data-it="Tecnologie costruttive, materiali ad alte prestazioni e ingegneria finanziaria al servizio del valore." data-en="Construction technologies, high-performance materials and financial engineering in service of value.">Tecnologie costruttive, materiali ad alte prestazioni e ingegneria finanziaria al servizio del valore.</p>
     </div>
     <div class="value-item">
-      <span class="num">03</span>
       <h3 data-it="Sostenibilità" data-en="Sustainability">Sostenibilità</h3>
       <p data-it="Riqualificazione energetica e modelli operativi che riducono impatto ambientale e costi nel tempo." data-en="Energy retrofit and operating models that reduce environmental impact and lifecycle costs.">Riqualificazione energetica e modelli operativi che riducono impatto ambientale e costi nel tempo.</p>
     </div>
     <div class="value-item">
-      <span class="num">04</span>
       <h3 data-it="Visione" data-en="Vision">Visione</h3>
       <p data-it="Orizzonte medio-lungo, partnership locali e una strategia che integra le società del gruppo." data-en="Medium- to long-term horizon, local partnerships and a strategy that integrates the group companies.">Orizzonte medio-lungo, partnership locali e una strategia che integra le società del gruppo.</p>
     </div>
@@ -959,7 +934,7 @@
     </div>
     <div class="foot-col">
       <h4 data-it="Gruppo" data-en="Group">Gruppo</h4>
-      <a href="#fenice-re">Fenice Real Estate Assets SA</a>
+      <a href="#fenice-re">Fenice Real Estate Assets</a>
       <a href="#blue-lake">Blue Lake Capital</a>
       <a href="#madi">M.A.DI.</a>
     </div>
@@ -970,6 +945,8 @@
     </div>
     <div class="foot-col">
       <h4 data-it="LinkedIn" data-en="LinkedIn">LinkedIn</h4>
+      <a href="https://www.linkedin.com/company/fenice-holding-sa" target="_blank" rel="noopener noreferrer" data-it="Fenice Holding SA" data-en="Fenice Holding SA">Fenice Holding SA</a>
+      <a href="https://www.linkedin.com/company/blue-lake-capital-sagl" target="_blank" rel="noopener noreferrer" data-it="Blue Lake Capital" data-en="Blue Lake Capital">Blue Lake Capital</a>
       <a href="https://www.linkedin.com/in/federico-cappelletti-7187551b8/" target="_blank" rel="noopener noreferrer">Federico Cappelletti</a>
       <a href="https://ch.linkedin.com/in/sebastianoandreoli" target="_blank" rel="noopener noreferrer">Sebastiano Andreoli</a>
     </div>
