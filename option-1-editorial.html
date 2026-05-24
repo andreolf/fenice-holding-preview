@@ -333,7 +333,7 @@
   .intro {
     padding: 4.5rem 3rem;
     display: grid;
-    grid-template-columns: minmax(9rem, 1fr) minmax(0, 2fr);
+    grid-template-columns: minmax(11rem, 13rem) minmax(0, 2fr);
     column-gap: 4rem;
     row-gap: 0;
     align-items: start;
@@ -341,18 +341,36 @@
     max-width: 1500px;
     margin: 0 auto;
   }
-  .intro-mark {
-    width: min(100%, 10.5rem);
-    height: 4.75rem;
+  .intro-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding-top: 0.15rem;
+  }
+  .intro-lockup__mark {
+    width: clamp(4.75rem, 11vw, 6.25rem);
+    height: clamp(5.35rem, 12vw, 7rem);
     background-color: var(--red);
     mask-image: url(assets/fenice-logo.png);
     mask-size: contain;
     mask-repeat: no-repeat;
-    mask-position: left top;
+    mask-position: left center;
     -webkit-mask-image: url(assets/fenice-logo.png);
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: left top;
+    -webkit-mask-position: left center;
+  }
+  .intro-lockup__wordmark {
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(0.78rem, 1.35vw, 0.92rem);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.35;
+    color: var(--ink);
+    max-width: 12rem;
   }
   .section-label {
     font-family: 'Outfit', sans-serif; font-size: 0.7rem;
@@ -739,7 +757,12 @@
       padding: 3rem 1.5rem;
       gap: 1rem;
     }
-    .intro-mark { height: 3.5rem; width: 8rem; }
+    .intro-lockup { gap: 0.65rem; }
+    .intro-lockup__mark {
+      width: clamp(4.25rem, 18vw, 5.5rem);
+      height: clamp(4.75rem, 20vw, 6.15rem);
+    }
+    .intro-lockup__wordmark { font-size: 0.72rem; letter-spacing: 0.18em; }
     .intro h2 { margin-bottom: 1.25rem; }
     .intro, .values, .cta { grid-template-columns: 1fr; }
     .values, .cta { padding: 4rem 1.5rem; gap: 2rem; }
@@ -808,7 +831,10 @@
 </div>
 
 <section class="intro" id="gruppo" data-io>
-  <div class="intro-mark" role="img" aria-label="Fenice"></div>
+  <div class="intro-lockup" aria-label="Fenice Holding SA">
+    <div class="intro-lockup__mark" role="img" aria-hidden="true"></div>
+    <p class="intro-lockup__wordmark">Fenice Holding SA</p>
+  </div>
   <div>
     <h2 data-it-html="Società del gruppo, &lt;em&gt;soluzioni integrate&lt;/em&gt;" data-en-html="Group companies, &lt;em&gt;integrated solutions&lt;/em&gt;">Società del gruppo, <em>soluzioni integrate</em></h2>
     <p data-it="Fenice Holding SA coordina un gruppo d&#39;investimento attivo sul territorio svizzero, con focus sulla valorizzazione del patrimonio immobiliare attraverso gestione imprenditoriale diretta e strutturazione finanziaria strategica delle operazioni." data-en="Fenice Holding SA coordinates an investment group active across Switzerland, focused on enhancing real estate assets through direct entrepreneurial management and strategic financial structuring of operations.">
