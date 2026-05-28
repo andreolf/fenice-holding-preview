@@ -320,46 +320,13 @@
     align-items: start;
   }
   .intro-lockup {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.7rem;
     padding-top: 0.2rem;
   }
-  .intro-lockup__mark {
-    width: clamp(4.25rem, 8vw, 5.35rem);
-    height: clamp(4.85rem, 9vw, 6.1rem);
-    background-color: var(--red);
-    mask-image: url(assets/fenice-logo.png);
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-position: left top;
-    -webkit-mask-image: url(assets/fenice-logo.png);
-    -webkit-mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: left top;
-  }
-  .intro-lockup__type {
-    margin: 0;
-    font-family: 'Cormorant Garamond', serif;
-    text-transform: uppercase;
-    color: var(--ink);
-    line-height: 1.05;
-    letter-spacing: 0.1em;
-  }
-  .intro-lockup__line {
+  .intro-lockup__logo {
     display: block;
-    font-weight: 600;
-  }
-  .intro-lockup__line--main {
-    font-size: clamp(1.05rem, 1.8vw, 1.28rem);
-    letter-spacing: 0.14em;
-  }
-  .intro-lockup__line--sub {
-    margin-top: 0.2rem;
-    font-size: clamp(0.92rem, 1.5vw, 1.08rem);
-    font-weight: 500;
-    letter-spacing: 0.22em;
+    width: clamp(6.75rem, 11vw, 8.5rem);
+    height: auto;
+    mix-blend-mode: screen;
   }
   .intro__copy {
     min-width: 0;
@@ -720,16 +687,7 @@
       grid-template-columns: 1fr;
       gap: 1.25rem;
     }
-    .intro-lockup {
-      flex-direction: row;
-      align-items: center;
-      gap: 1rem;
-    }
-    .intro-lockup__mark {
-      width: 4rem;
-      height: 4.6rem;
-      flex-shrink: 0;
-    }
+    .intro-lockup__logo { width: clamp(6rem, 28vw, 7.5rem); }
     .intro__copy h2 { margin-bottom: 1.25rem; }
     .values, .cta { grid-template-columns: 1fr; }
     .values, .cta { padding: 4rem 1.5rem; gap: 2rem; }
@@ -793,11 +751,13 @@
 <section class="intro" id="gruppo" data-io>
   <div class="intro__inner">
     <div class="intro-lockup" aria-label="Fenice Holding">
-      <div class="intro-lockup__mark" aria-hidden="true"></div>
-      <p class="intro-lockup__type">
-        <span class="intro-lockup__line intro-lockup__line--main">Fenice</span>
-        <span class="intro-lockup__line intro-lockup__line--sub">Holding</span>
-      </p>
+      <img
+        class="intro-lockup__logo"
+        src="assets/fenice-logo-lockup.png"
+        width="340"
+        height="340"
+        alt="Fenice Holding"
+      />
     </div>
     <div class="intro__copy">
       <h2 data-it-html="Società del gruppo, &lt;em&gt;soluzioni integrate&lt;/em&gt;" data-en-html="Group companies, &lt;em&gt;integrated solutions&lt;/em&gt;">Società del gruppo, <em>soluzioni integrate</em></h2>
