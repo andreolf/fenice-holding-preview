@@ -343,34 +343,13 @@
   }
   .intro-lockup {
     display: flex;
-    flex-direction: column;
     align-items: flex-start;
-    gap: 0.85rem;
     padding-top: 0.15rem;
   }
-  .intro-lockup__mark {
-    width: clamp(4.75rem, 11vw, 6.25rem);
-    height: clamp(5.35rem, 12vw, 7rem);
-    background-color: var(--red);
-    mask-image: url(assets/fenice-logo.png);
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-position: left center;
-    -webkit-mask-image: url(assets/fenice-logo.png);
-    -webkit-mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: left center;
-  }
-  .intro-lockup__wordmark {
-    margin: 0;
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(0.78rem, 1.35vw, 0.92rem);
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    line-height: 1.35;
-    color: var(--ink);
-    max-width: 12rem;
+  .intro-lockup__logo {
+    width: clamp(8.5rem, 15vw, 11rem);
+    height: auto;
+    display: block;
   }
   .section-label {
     font-family: 'Outfit', sans-serif; font-size: 0.7rem;
@@ -388,14 +367,14 @@
   }
   .intro h2 em { color: var(--red); font-style: italic; }
   .intro p {
-    font-size: 1.05rem; max-width: 38rem; color: var(--ink-soft);
+    font-size: 1.05rem; max-width: none; color: var(--ink-soft);
     margin-bottom: 1.2rem; line-height: 1.7;
   }
   .intro p:last-of-type { margin-bottom: 0; }
   .leadership {
     margin-top: 2rem;
     display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
-    padding-top: 1.75rem; border-top: 1px solid var(--rule); max-width: 38rem;
+    padding-top: 1.75rem; border-top: 1px solid var(--rule); max-width: none;
   }
   .leader-name {
     font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
@@ -583,12 +562,6 @@
     font-size: 0.95rem; color: var(--values-muted); line-height: 1.65;
     font-weight: 300;
   }
-  .values-watermark {
-    position: absolute; right: -8rem; bottom: -10rem;
-    width: 35rem; height: auto; opacity: 0.06; pointer-events: none;
-    will-change: transform;
-  }
-
   /* Scroll-linked motion (Chrome / Safari recenti) — effetto “scroll storytelling” */
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
@@ -596,19 +569,10 @@
         from { transform: translateY(1.5rem); opacity: 0.92; }
         to { transform: translateY(-1.25rem); opacity: 1; }
       }
-      @keyframes fenice-wm-drift {
-        from { transform: translate(4%, 6%) rotate(-3deg) scale(1); }
-        to { transform: translate(-6%, -4%) rotate(4deg) scale(1.05); }
-      }
       .intro > div:last-child {
         animation: fenice-intro-shift linear both;
         animation-timeline: view();
         animation-range: entry 0% contain 50%;
-      }
-      .values-watermark {
-        animation: fenice-wm-drift linear both;
-        animation-timeline: view();
-        animation-range: entry 0% contain 85%;
       }
     }
   }
@@ -757,12 +721,7 @@
       padding: 3rem 1.5rem;
       gap: 1rem;
     }
-    .intro-lockup { gap: 0.65rem; }
-    .intro-lockup__mark {
-      width: clamp(4.25rem, 18vw, 5.5rem);
-      height: clamp(4.75rem, 20vw, 6.15rem);
-    }
-    .intro-lockup__wordmark { font-size: 0.72rem; letter-spacing: 0.18em; }
+    .intro-lockup__logo { width: clamp(8rem, 34vw, 9.75rem); }
     .intro h2 { margin-bottom: 1.25rem; }
     .intro, .values, .cta { grid-template-columns: 1fr; }
     .values, .cta { padding: 4rem 1.5rem; gap: 2rem; }
@@ -832,8 +791,7 @@
 
 <section class="intro" id="gruppo" data-io>
   <div class="intro-lockup" aria-label="Fenice Holding SA">
-    <div class="intro-lockup__mark" role="img" aria-hidden="true"></div>
-    <p class="intro-lockup__wordmark">Fenice Holding SA</p>
+    <img class="intro-lockup__logo" src="assets/fenice-logo-official.png" alt="Fenice Holding SA" />
   </div>
   <div>
     <h2 data-it-html="Società del gruppo, &lt;em&gt;soluzioni integrate&lt;/em&gt;" data-en-html="Group companies, &lt;em&gt;integrated solutions&lt;/em&gt;">Società del gruppo, <em>soluzioni integrate</em></h2>
@@ -905,11 +863,8 @@
     <div>
       <div class="company-name">M.A.DI. <span>Modular & Deployable Housing</span></div>
     </div>
-    <p class="company-body" data-it="Progettazione e produzione di moduli prefabbricati e case dispiegabili brevettate. Materiali ad alte prestazioni, sistemi sostenibili e tecnologie smart per abitazioni rapide da installare, efficienti e adattabili. Soluzioni per emergenze, housing sociale, ricettivo, uffici temporanei e ampliamenti — chiavi in mano." data-en="Design and production of prefabricated modules and patented deployable homes. High-performance materials, sustainable systems and smart technologies for fast, efficient, adaptable housing. Solutions for emergencies, social housing, hospitality, temporary offices and extensions — turnkey delivery.">
-      Progettazione e produzione di moduli prefabbricati e case dispiegabili brevettate. Materiali
-      ad alte prestazioni, sistemi sostenibili e tecnologie smart per abitazioni rapide da installare,
-      efficienti e adattabili. Soluzioni per emergenze, housing sociale, ricettivo, uffici temporanei
-      e ampliamenti — chiavi in mano.
+    <p class="company-body" data-it="Progettazione, costruzione e montaggio di abitazioni modulari ad alta efficienza energetica, sviluppate attraverso tecnologie innovative e soluzioni sostenibili. La società realizza moduli prefabbricati moderni e personalizzabili, ottimizzando tempi di costruzione, costi operativi ed efficienza energetica, con un approccio orientato alla sostenibilità ed alla qualità costruttiva. Grazie ad un modello operativo flessibile e chiavi in mano, M.A.DI. sviluppa soluzioni abitative rapide da installare, tecnologicamente avanzate ed adattabili a differenti esigenze residenziali, ricettive e professionali." data-en="Design, construction and assembly of modular homes with high energy efficiency, developed through innovative technologies and sustainable solutions. The company delivers modern, customizable prefabricated modules, optimizing construction timelines, operating costs and energy performance with a sustainability- and quality-driven approach. Thanks to a flexible turnkey operating model, M.A.DI. develops housing solutions that are quick to install, technologically advanced and adaptable to different residential, hospitality and professional needs.">
+      Progettazione, costruzione e montaggio di abitazioni modulari ad alta efficienza energetica, sviluppate attraverso tecnologie innovative e soluzioni sostenibili. La società realizza moduli prefabbricati moderni e personalizzabili, ottimizzando tempi di costruzione, costi operativi ed efficienza energetica, con un approccio orientato alla sostenibilità ed alla qualità costruttiva. Grazie ad un modello operativo flessibile e chiavi in mano, M.A.DI. sviluppa soluzioni abitative rapide da installare, tecnologicamente avanzate ed adattabili a differenti esigenze residenziali, ricettive e professionali.
     </p>
     <ul class="company-tags">
       <li data-it="Moduli Brevettati" data-en="Patented modules">Moduli Brevettati</li>
@@ -921,7 +876,6 @@
 </section>
 
 <section class="values" data-io>
-  <img class="values-watermark" src="assets/fenice-logo-white.png" alt="" />
   <div>
     <div class="section-label" style="display:flex; align-items:center; gap:0.7rem;">
       <span style="display:inline-block; width:8px; height:8px; background: var(--values-accent); border-radius:50%;"></span>
