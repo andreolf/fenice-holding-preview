@@ -341,20 +341,22 @@
     border-radius: 50%; margin-right: 0.7rem; vertical-align: middle;
   }
   .intro__copy h2 {
-    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.6rem);
+    font-family: 'Cormorant Garamond', serif; font-size: 3.4rem;
     font-weight: 400; line-height: 1.05; letter-spacing: -0.015em;
     margin: 0 0 1.5rem;
+    max-width: 47rem;
+    text-wrap: balance;
   }
   .intro__copy h2 em { color: var(--red); font-style: italic; }
   .intro__copy p {
-    font-size: 1.05rem; max-width: 40rem; color: var(--ink-soft);
+    font-size: 1.05rem; max-width: 46.5rem; color: var(--ink-soft);
     margin-bottom: 1.2rem; line-height: 1.7;
   }
   .intro__copy p:last-of-type { margin-bottom: 0; }
   .leadership {
     margin-top: 2rem;
     display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
-    padding-top: 1.75rem; border-top: 1px solid var(--rule); max-width: 40rem;
+    padding-top: 1.75rem; border-top: 1px solid var(--rule); max-width: 46.5rem;
   }
   .leader-name {
     font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
@@ -688,7 +690,7 @@
       gap: 1.25rem;
     }
     .intro-lockup__logo { width: clamp(6rem, 28vw, 7.5rem); }
-    .intro__copy h2 { margin-bottom: 1.25rem; }
+    .intro__copy h2 { font-size: clamp(2rem, 7vw, 2.75rem); margin-bottom: 1.25rem; }
     .values, .cta { grid-template-columns: 1fr; }
     .values, .cta { padding: 4rem 1.5rem; gap: 2rem; }
     .companies-header { padding: 0 1.5rem 3rem; flex-direction: column; gap: 1rem; align-items: start; }
