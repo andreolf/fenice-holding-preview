@@ -326,8 +326,10 @@
     display: block;
     width: clamp(6.75rem, 11vw, 8.5rem);
     height: auto;
-    mix-blend-mode: multiply;
   }
+  .intro-lockup__logo--dark { display: none; }
+  html[data-theme="dark"] .intro-lockup__logo--light { display: none; }
+  html[data-theme="dark"] .intro-lockup__logo--dark { display: block; }
   .intro__copy {
     min-width: 0;
   }
@@ -754,11 +756,19 @@
   <div class="intro__inner">
     <div class="intro-lockup" aria-label="Fenice Holding">
       <img
-        class="intro-lockup__logo"
-        src="assets/fenice-logo-lockup.png"
-        width="760"
-        height="880"
+        class="intro-lockup__logo intro-lockup__logo--light"
+        src="assets/fenice-logo.png"
+        width="1063"
+        height="1206"
         alt="Fenice Holding"
+      />
+      <img
+        class="intro-lockup__logo intro-lockup__logo--dark"
+        src="assets/fenice-logo-white.png"
+        width="1063"
+        height="1206"
+        alt=""
+        aria-hidden="true"
       />
     </div>
     <div class="intro__copy">

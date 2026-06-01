@@ -23,12 +23,3 @@ html[data-theme="dark"] {
 html[data-theme="dark"] .footer-brand-block img {
   filter: brightness(0) invert(1) opacity(0.9);
 }
-
-/* Official lockup keeps its baked white background; on dark theme show it
-   on its own light tile (multiply would erase the dark wordmark). */
-html[data-theme="dark"] .intro-lockup__logo {
-  mix-blend-mode: normal;
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 0.65rem;
-}
