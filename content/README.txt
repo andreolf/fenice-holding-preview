@@ -2,7 +2,7 @@ Modifiche senza toccare il codice del sito
 ==========================================
 
 1) FOTO HERO
-   - Sostituisci il file: assets/hero-bernina-train.png
+   - Sostituisci il file: assets/hero-bernina-train.jpg
      (stesso nome, nuova immagine in verticale consigliata)
    - Oppure cambia il percorso in: content/site.json → "heroImage"
    - Regola il ritaglio con: "heroImagePosition" (es. "center 30%")
