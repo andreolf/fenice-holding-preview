@@ -9,6 +9,14 @@
       document.documentElement.setAttribute("data-theme", "dark");
     }
   } catch (e) {}
+  try {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  } catch (e) {}
+  if (!location.hash) {
+    window.addEventListener("load", function () {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    });
+  }
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
