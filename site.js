@@ -200,6 +200,23 @@
       .catch(function () {});
   }
 
+  function bindMobileNav() {
+    var bar = document.querySelector(".topbar");
+    var toggle = document.querySelector(".nav-toggle");
+    if (!bar || !toggle) return;
+    function close() {
+      bar.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+    toggle.addEventListener("click", function () {
+      var open = bar.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    bar.querySelectorAll("nav a").forEach(function (a) {
+      a.addEventListener("click", close);
+    });
+  }
+
   function init() {
     initTheme();
     document.documentElement.lang = getLang();
@@ -211,6 +228,7 @@
     applySiteConfig();
     initScrollIO();
     initMotion3D();
+    bindMobileNav();
   }
 
   if (document.readyState === "loading") {
