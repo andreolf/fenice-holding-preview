@@ -5,10 +5,12 @@
 <script>
 (function () {
   try {
-    if (localStorage.getItem("fenice-theme") === "dark") {
+    if (localStorage.getItem("fenice-theme") !== "light") {
       document.documentElement.setAttribute("data-theme", "dark");
     }
-  } catch (e) {}
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
   try {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   } catch (e) {}
