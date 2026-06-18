@@ -217,6 +217,19 @@
     });
   }
 
+  function bindAnchorClean() {
+    var links = document.querySelectorAll('a[href^="#"]');
+    links.forEach(function (a) {
+      a.addEventListener("click", function () {
+        window.setTimeout(function () {
+          try {
+            history.replaceState(null, "", location.pathname + location.search);
+          } catch (e) {}
+        }, 800);
+      });
+    });
+  }
+
   function init() {
     initTheme();
     document.documentElement.lang = getLang();
@@ -229,6 +242,7 @@
     initScrollIO();
     initMotion3D();
     bindMobileNav();
+    bindAnchorClean();
   }
 
   if (document.readyState === "loading") {

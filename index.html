@@ -12,11 +12,12 @@
   try {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   } catch (e) {}
-  if (!location.hash) {
-    window.addEventListener("load", function () {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    });
-  }
+  window.addEventListener("load", function () {
+    if (location.hash) {
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  });
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,6 +51,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
     max-width: 100%;
   }
   body {
@@ -717,6 +719,7 @@
     nav li { border-top: 1px solid var(--rule-soft); }
     nav a { display: block; padding: 0.85rem 0; font-size: 0.8rem; letter-spacing: 0.12em; }
     .hero-cover { aspect-ratio: 16 / 9; max-height: none; }
+    html { scroll-padding-top: 1.5rem; }
     .hero-cover__content { padding: 6.5rem 1.5rem 2rem; }
     .hero h1.display { max-width: none; }
     .strip { padding: 1.1rem 1.25rem; }
